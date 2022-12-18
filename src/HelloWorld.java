@@ -17,7 +17,9 @@ public class HelloWorld extends HttpServlet {
         LocalDateTime lt = LocalDateTime.now();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyy/MM/dd HH:mm:ss");
         PrintWriter out = response.getWriter();
-        out.println("<html lang=\"ja\"><head><meta charset=\"UTF-8\"></head><body>");
+        out.println("<html lang=\"ja\"><head>");
+        out.println("<meta charset=\"UTF-8\"><title>サンプル</title>");
+        out.println("</head><body>");
         out.println("<h1>サンプルページ</h1>");
         out.println("<p>Hello World!</p>");
         out.println("<p>現在日時："+lt.format(fmt)+"</p>");
