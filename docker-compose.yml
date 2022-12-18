@@ -11,3 +11,4 @@ services:
       - ./src:/usr/local/tomcat/src
     environment:
       - TZ=Asia/Tokyo
+    restart: always
