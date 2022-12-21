@@ -8,7 +8,6 @@ services:
       - 8080:8080
     volumes:
       - ./webapps:/usr/local/tomcat/webapps
-      - ./src:/usr/local/tomcat/src
     environment:
       - TZ=Asia/Tokyo
     restart: always

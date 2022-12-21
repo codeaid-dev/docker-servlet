@@ -2,7 +2,7 @@
   "name": "Dev-Container",
   "dockerComposeFile": "../docker-compose.yml",
   "service": "tomcat",
-  "workspaceFolder": "/usr/local/tomcat",
+  "workspaceFolder": "/usr/local/tomcat/webapps",
   "extensions": [
     "vscjava.vscode-java-pack"
   ]
