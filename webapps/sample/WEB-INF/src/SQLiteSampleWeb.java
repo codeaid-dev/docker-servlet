@@ -68,7 +68,7 @@ public class SQLiteSampleWeb extends HttpServlet {
           conn.close();
         }
       } catch (SQLException e) {
-        e.printStackTrace();
+        out.println(e.getMessage());
       }
     }
   }
