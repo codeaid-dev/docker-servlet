@@ -11,3 +11,29 @@ services:
     environment:
       - TZ=Asia/Tokyo
     restart: always
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      MEMORY_LIMIT: 128M
+      UPLOAD_LIMIT: 64M
+    restart: always
+    ports:
+      - "8888:80"
+volumes:
+    db_data: {}

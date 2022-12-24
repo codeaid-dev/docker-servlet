@@ -4,18 +4,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SQLiteSample {
+public class MySQLSample {
   public static void main(String[] args) throws SQLException {
-    String dbname = "sample.db";
+    String hostname = "mysql";
+    String dbname = "sampledb";
+    String username = "root";
+    String password = "password";
     Connection conn = null;
     Statement stmt = null;
     try {
-      Class.forName("org.sqlite.JDBC");
-      conn = DriverManager.getConnection("jdbc:sqlite:../db/" + dbname);
+      Class.forName("com.mysql.jdbc.Driver");
+      conn = DriverManager.getConnection("jdbc:mysql://"+ hostname + "/" + dbname, username, password);
       System.out.println("接続成功");
 
       stmt = conn.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT, score INTEGER)");
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name VARCHAR(20), score INTEGER)");
       System.out.println("テーブル作成");
 
       stmt.executeUpdate("INSERT INTO users VALUES(1, 'Yamada', 85)");
