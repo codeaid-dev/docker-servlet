@@ -35,6 +35,7 @@ public class MySQLSampleWeb extends HttpServlet {
       Class.forName("com.mysql.jdbc.Driver");
       conn = DriverManager.getConnection("jdbc:mysql://"+ hostname + "/" + dbname, username, password);
       out.println("<p>接続成功</p>");
+      log("テスト出力");
 
       stmt = conn.createStatement();
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name VARCHAR(20), score INTEGER)");

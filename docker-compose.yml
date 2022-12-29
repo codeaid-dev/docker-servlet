@@ -5,7 +5,7 @@ services:
     image: tomcat:9.0.70-jdk17
     container_name: tomcat
     ports:
-      - 8080:8080
+      - 8000:8080
     volumes:
       - ./webapps:/usr/local/tomcat/webapps
     environment:
@@ -34,6 +34,6 @@ services:
       UPLOAD_LIMIT: 64M
     restart: always
     ports:
-      - "8888:80"
+      - "8080:80"
 volumes:
     db_data: {}
