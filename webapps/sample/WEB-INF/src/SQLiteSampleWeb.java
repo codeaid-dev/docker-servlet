@@ -61,12 +61,8 @@ public class SQLiteSampleWeb extends HttpServlet {
       out.println(e.getMessage());
     } finally {
       try {
-        if (stmt != null) {
-          stmt.close();
-        }
-        if (conn != null) {
-          conn.close();
-        }
+        if (stmt != null) { stmt.close(); }
+        if (conn != null) { conn.close(); }
       } catch (SQLException e) {
         out.println(e.getMessage());
       }

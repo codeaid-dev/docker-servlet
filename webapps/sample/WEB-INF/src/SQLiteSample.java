@@ -39,12 +39,8 @@ public class SQLiteSample {
       e.printStackTrace();
     } finally {
       try {
-        if (stmt != null) {
-          stmt.close();
-        }
-        if (conn != null) {
-          conn.close();
-        }
+        if (stmt != null) { stmt.close(); }
+        if (conn != null) { conn.close(); }
       } catch (SQLException e) {
         e.printStackTrace();
       }
