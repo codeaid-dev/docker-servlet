@@ -18,19 +18,16 @@ public class SQLiteSample2 {
       pstmt.executeUpdate();
       System.out.println("テーブル作成");
 
+      int[] ids = {1,2,3};
+      String[] names = {"Yamada","Tanaka","Suzuki"};
+      int[] scores = {85,79,63};
       pstmt = conn.prepareStatement("INSERT INTO users VALUES(?, ?, ?)");
-      pstmt.setInt(1, 1);
-      pstmt.setString(2, "Yamada");
-      pstmt.setInt(3, 85);
-      pstmt.executeUpdate();
-      pstmt.setInt(1, 2);
-      pstmt.setString(2, "Tanaka");
-      pstmt.setInt(3, 79);
-      pstmt.executeUpdate();
-      pstmt.setInt(1, 3);
-      pstmt.setString(2, "Suszuki");
-      pstmt.setInt(3, 63);
-      pstmt.executeUpdate();
+      for (int i=0; i<3; i++) {
+        pstmt.setInt(1, ids[i]);
+        pstmt.setString(2, names[i]);
+        pstmt.setInt(3, scores[i]);
+        pstmt.executeUpdate();
+      }
       System.out.println("データ挿入");
 
       pstmt = conn.prepareStatement("SELECT * FROM users WHERE score >= ?");
