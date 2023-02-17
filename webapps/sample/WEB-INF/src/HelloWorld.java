@@ -19,6 +19,7 @@ public class HelloWorld extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html lang=\"ja\"><head>");
         out.println("<meta charset=\"UTF-8\"><title>サンプル</title>");
+        out.println("<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/style.css\"");
         out.println("</head><body>");
         out.println("<h1>サンプルページ</h1>");
         out.println("<p>Hello World!</p>");
