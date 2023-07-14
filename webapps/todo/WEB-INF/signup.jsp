@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="model.User,java.util.HashMap,java.util.Map" %>
 <%
 String error = (String)request.getAttribute("error");
 %>

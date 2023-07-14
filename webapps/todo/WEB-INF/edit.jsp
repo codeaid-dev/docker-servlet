@@ -11,9 +11,9 @@ User user = (User)session.getAttribute("user");
   <title>ToDoアプリ</title>
 </head>
 <body>
-  <h1>ToDo - <%= user.getUsername() %></h1>
+  <h1>ToDo - <%= user.escape(user.getUsername()) %></h1>
   <form action="/todo/edit" method="post">
-    <textarea name="task" rows="4" cols="30" required><%=  user.getTask() %></textarea><br>
+    <textarea name="task" rows="4" cols="30" required><%=  user.escape(user.getTask()) %></textarea><br>
     <button type="submit" name="edit">修正</button>
   </form>
   <br>
