@@ -27,7 +27,7 @@ User user = (User)session.getAttribute("user");
   </style>
 </head>
 <body>
-  <h1>ToDo - <%= user.getUsername() %></h1>
+  <h1>ToDo - <%= user.escape(user.getUsername()) %></h1>
   <form action="/todo/" method="post">
     <textarea name="task" rows="4" cols="30" placeholder="タスク追加" required></textarea><br>
     <button type="submit" name="add">追加</button>
@@ -41,7 +41,7 @@ User user = (User)session.getAttribute("user");
     <% HashMap<String, String> tasks = user.getTasks(); %>
     <% for (Map.Entry<String, String> entry : tasks.entrySet()) { %>
     <tr>
-      <td><%= entry.getValue().replace("\n","<br>") %></td>
+      <td><%= user.escape(entry.getValue()).replace("\n","<br>") %></td>
       <td><a href=<%= "/todo/edit?del=" + entry.getKey() %>>削除</a>
       <a href=<%= "/todo/edit?edit=" + entry.getKey() %>>修正</a></td>
     </tr>

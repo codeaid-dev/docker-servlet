@@ -56,4 +56,15 @@ public class User implements Serializable {
     }
     return hash;
   }
+  public static String escape(String str) {
+    if (str != null) {
+      str = str.replaceAll("&","&amp;");
+      str = str.replaceAll("<","&lt;");
+      str = str.replaceAll(">","&gt;");
+      str = str.replaceAll("'","&#39;");
+      str = str.replaceAll("\"","&quot;");
+      return str;
+    }
+    return null;
+  }
 }
