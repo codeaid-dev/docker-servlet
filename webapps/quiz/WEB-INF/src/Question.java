@@ -41,7 +41,7 @@ public class Question extends HttpServlet {
     if (right.equals(answer)) {
       request.setAttribute("result", "正解です");
     } else {
-      request.setAttribute("result", "不正解です(正解："+right+")");
+      request.setAttribute("result", "不正解です(正解："+quiz.escape(right)+")");
     }
     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/quiz.jsp");
     dispatcher.forward(request, response);

@@ -19,8 +19,8 @@ String result = (String)request.getAttribute("result");
   String answer="";
   if (quiz != null) {
     id = quiz.getID();
-    question = quiz.getQuestion();
-    answer = quiz.getAnswer();
+    question = quiz.escape(quiz.getQuestion());
+    answer = quiz.escape(quiz.getAnswer());
   }
   %>
   <form action="/quiz/quiz" method="POST">

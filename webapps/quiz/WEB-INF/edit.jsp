@@ -35,8 +35,8 @@ ArrayList<Quiz> quizlist = (ArrayList<Quiz>)request.getAttribute("quizlist");
   String answer="";
   if (quiz != null) {
     id = quiz.getID();
-    question = quiz.getQuestion();
-    answer = quiz.getAnswer();
+    question = quiz.escape(quiz.getQuestion());
+    answer = quiz.escape(quiz.getAnswer());
   }
   %>
   <% if (quiz != null && quiz.getInfo() != null) { %>
@@ -64,8 +64,8 @@ ArrayList<Quiz> quizlist = (ArrayList<Quiz>)request.getAttribute("quizlist");
       <tbody>
         <% for (Quiz l : quizlist) { %>
           <tr><td><%= l.getID() %></td>
-          <td><%= l.getQuestion() %></td>
-          <td><%= l.getAnswer() %></td></tr>
+          <td><%= l.escape(l.getQuestion()) %></td>
+          <td><%= l.escape(l.getAnswer()) %></td></tr>
         <% } %>
       </tbody>
     </table>

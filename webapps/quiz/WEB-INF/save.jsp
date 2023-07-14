@@ -16,8 +16,8 @@ Quiz quiz = (Quiz)request.getAttribute("quiz");
   String question="";
   String answer="";
   if (quiz != null) {
-    question = quiz.getQuestion();
-    answer = quiz.getAnswer();
+    question = quiz.escape(quiz.getQuestion());
+    answer = quiz.escape(quiz.getAnswer());
   }
   %>
   <% if (quiz != null && quiz.getInfo() != null) { %>
