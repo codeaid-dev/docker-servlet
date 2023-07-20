@@ -26,7 +26,7 @@
   <% if (books != null) { %>
     <% for (Book bk : books) { %>
       <p>ISBN：<%= bk.getISBN() %></p>
-      <p>書籍名：<%= bk.getName() %></p>
+      <p>書籍名：<%= bk.escape(bk.getName()) %></p>
       <p>価格：<%= bk.getPrice() %></p>
       <p>ページ数：<%= bk.getPage() %></p>
       <p>発売日：<%= bk.getDate() %></p>
@@ -36,7 +36,7 @@
       </form>
       <form action="/books/update" method="POST" style="display:inline-block">
         <input type="hidden" name="update" value="<%= bk.getISBN() %>">
-        <input type="hidden" name="name" value="<%= bk.getName() %>">
+        <input type="hidden" name="name" value="<%= bk.escape(bk.getName()) %>">
         <input type="hidden" name="price" value="<%= bk.getPrice() %>">
         <input type="hidden" name="page" value="<%= bk.getPage() %>">
         <input type="hidden" name="date" value="<%= bk.getDate() %>">
