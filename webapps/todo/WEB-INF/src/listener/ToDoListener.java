@@ -12,7 +12,7 @@ public class ToDoListener implements ServletContextListener {
   public void contextInitialized(ServletContextEvent sce) {
     DBAccess db = new DBAccess(sce.getServletContext());
     db.create();
-    sce.getServletContext().log("DB Table create done.");
+    //sce.getServletContext().log("DB Table create done.");
   }
   public void contextDestroyed(ServletContextEvent sce) {}
 }
