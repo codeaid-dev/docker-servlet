@@ -14,16 +14,16 @@ public class Book implements Serializable {
   private ArrayList<String> info = new ArrayList<String>();
   public Book() {}
   public Book(String isbn,String name,String price,String page,String date) {
-    this.isbn = escape(isbn);
-    this.name = escape(name);
+    this.isbn = isbn;
+    this.name = name;
     this.price = price;
     this.page = page;
     this.date = date;
   }
   public String getISBN() { return this.isbn; }
-  public void setISBN(String isbn) { this.isbn = escape(isbn); }
+  public void setISBN(String isbn) { this.isbn = isbn; }
   public String getName() { return this.name; }
-  public void setName(String name) { this.name = escape(name); }
+  public void setName(String name) { this.name = name; }
   public String getPrice() { return this.price; }
   public void setPrice(String price) { this.price = price; }
   public String getPage() { return this.page; }
@@ -37,7 +37,7 @@ public class Book implements Serializable {
   public ArrayList<String> getInfo() { return this.info; }
   public void setInfo(String inf) { this.info.add(inf); }
   public void resetInfo() { this.info.clear(); }
-  private static String escape(String str) {
+  public static String escape(String str) {
     if (str != null) {
       str = str.replaceAll("&","&amp;");
       str = str.replaceAll("<","&lt;");
