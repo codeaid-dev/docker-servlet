@@ -65,27 +65,27 @@ HashMap<String, String> survey = (HashMap<String, String>)request.getAttribute("
       <% } %>
     </fieldset>
     <label for="maker">パソコンメーカー：</label>
-    <select name="maker" id="maker">
-      <option value="その他">選択してください。</option>
-      <% String selected = survey.get("maker").equals("lenovo") ? "selected" : ""; %>
+    <select name="maker" id="maker" required>
+      <option value="">選択してください。</option>
+      <% String selected = survey.get("maker").equals("Lenovo") ? "selected" : ""; %>
       <option value="Lenovo" <%= selected %>>Lenovo</option>
-      <% selected = survey.get("maker").equals("dell") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("DELL") ? "selected" : ""; %>
       <option value="DELL" <%= selected %>>DELL</option>
-      <% selected = survey.get("maker").equals("hp") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("HP") ? "selected" : ""; %>
       <option value="HP" <%= selected %>>HP</option>
-      <% selected = survey.get("maker").equals("apple") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("Apple") ? "selected" : ""; %>
       <option value="Apple" <%= selected %>>Apple</option>
-      <% selected = survey.get("maker").equals("dynabook") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("Dynabook") ? "selected" : ""; %>
       <option value="Dynabook" <%= selected %>>Dynabook</option>
-      <% selected = survey.get("maker").equals("nec") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("NEC") ? "selected" : ""; %>
       <option value="NEC" <%= selected %>>NEC</option>
-      <% selected = survey.get("maker").equals("vaio") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("VAIO") ? "selected" : ""; %>
       <option value="VAIO" <%= selected %>>VAIO</option>
-      <% selected = survey.get("maker").equals("asus") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("ASUS") ? "selected" : ""; %>
       <option value="ASUS" <%= selected %>>ASUS</option>
-      <% selected = survey.get("maker").equals("self") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("自作") ? "selected" : ""; %>
       <option value="自作" <%= selected %>>自作</option>
-      <% selected = survey.get("maker").equals("other") ? "selected" : ""; %>
+      <% selected = survey.get("maker").equals("その他") ? "selected" : ""; %>
       <option value="その他" <%= selected %>>その他</option>
     </select>
     </p><p>
