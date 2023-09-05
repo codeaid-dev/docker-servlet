@@ -16,6 +16,6 @@
     <textarea id="article" name="article" rows="5" cols="40" required></textarea>
     <p><button type="submit" name="add">追加</button></p>
   </form>
-  <p><a href="/blog/">トップ</a></p>
+  <p><a href="/blog/admin">トップ</a></p>
 </body>
 </html>

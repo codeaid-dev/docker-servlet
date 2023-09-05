@@ -10,8 +10,8 @@
 </head>
 <body>
   <h1><%= post.getTitle() %></h1>
-  <p>作成日時：<%= post.getCreatedDate() %><br>
-  更新日時：<%= post.getUpdatedDate() %></p>
+  <p>作成日時：<%= post.getCreatedDatetime() %><br>
+  更新日時：<%= post.getUpdatedDatetime() %></p>
   <div>
     <p>
       <% String article = post.getArticle().replace("\n","<br>"); %>

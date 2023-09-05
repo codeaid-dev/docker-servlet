@@ -19,6 +19,6 @@
     <input type="hidden" name="id" value="<%= post.getId() %>">
     <p><button type="submit" name="update" style="margin-right:20px;">更新</button><button type="submit" name="delete">削除</button></p>
   </form>
-  <p><a href="/blog/">トップ</a></p>
+  <p><a href="/blog/admin">トップ</a></p>
 </body>
 </html>

@@ -173,7 +173,7 @@ public class DBAccess {
       conn = DriverManager.getConnection("jdbc:mysql://mysql/blog", USER, PASS); //MySQL
       //conn = DriverManager.getConnection("jdbc:sqlite:webapps/blog/WEB-INF/db/blog.db"); //SQLite
       ResultSet rs = null;
-      String sql = "SELECT * FROM posts";
+      String sql = "SELECT * FROM posts ORDER BY updated_at DESC";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       rs = pstmt.executeQuery();
       while (rs.next()) {
