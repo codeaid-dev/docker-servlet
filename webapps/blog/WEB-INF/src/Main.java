@@ -31,9 +31,14 @@ public class Main extends HttpServlet {
       dispatcher.forward(request, response);
     } else {
       Post post = db.selectPost(Integer.parseInt(postId));
-      request.setAttribute("post", post);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/post.jsp");
-      dispatcher.forward(request, response);
+      if (post.getId() == 0) {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, "投稿ページが見つかりません");
+        //response.sendRedirect(request.getContextPath()+"/404.jsp");
+      } else {
+        request.setAttribute("post", post);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/post.jsp");
+        dispatcher.forward(request, response);
+      }
     }
   }
 }
