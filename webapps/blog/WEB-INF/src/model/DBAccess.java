@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import model.User;
 import model.Post;

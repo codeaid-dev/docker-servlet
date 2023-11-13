@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   tomcat:
-    image: tomcat:9.0.70-jdk17
+    image: tomcat:10.1.15-jdk17
     container_name: tomcat
     ports:
       - 8000:8080
