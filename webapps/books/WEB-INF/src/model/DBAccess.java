@@ -24,10 +24,10 @@ public class DBAccess {
   }
   public void create() {
     try {
-      Class.forName("org.sqlite.JDBC"); //SQLite
-      //Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
-      conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
+      Class.forName("com.mysql.jdbc.Driver"); //MySQL
+      //Class.forName("org.sqlite.JDBC"); //SQLite
+      conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
+      //conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
       String sql = """
         CREATE TABLE IF NOT EXISTS books (
           isbn VARCHAR(17) NOT NULL PRIMARY KEY,
@@ -53,10 +53,10 @@ public class DBAccess {
 
   public void insert(Book book) {
     try {
-      Class.forName("org.sqlite.JDBC"); //SQLite
-      //Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
-      conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
+      Class.forName("com.mysql.jdbc.Driver"); //MySQL
+      //Class.forName("org.sqlite.JDBC"); //SQLite
+      conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
+      //conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
       String sql = "INSERT INTO books (isbn, name, price, page, date) VALUES (?, ?, ?, ?, ?)";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,book.getISBN());
@@ -81,10 +81,10 @@ public class DBAccess {
   public ArrayList<Book> select(String... keyword) {
     ArrayList<Book> result = new ArrayList<Book>();
     try {
-      Class.forName("org.sqlite.JDBC"); //SQLite
-      //Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
-      conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
+      Class.forName("com.mysql.jdbc.Driver"); //MySQL
+      //Class.forName("org.sqlite.JDBC"); //SQLite
+      conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
+      //conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
       ResultSet rs = null;
       if (keyword.length != 0) {
         String name = "%"+keyword[0]+"%";
@@ -123,10 +123,10 @@ public class DBAccess {
 
   public void update(Book book) {
     try {
-      Class.forName("org.sqlite.JDBC"); //SQLite
-      //Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
-      conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
+      Class.forName("com.mysql.jdbc.Driver"); //MySQL
+      //Class.forName("org.sqlite.JDBC"); //SQLite
+      conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
+      //conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
       String sql = "UPDATE books SET name=?, price=?, page=?, date=? WHERE isbn=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,book.getName());
@@ -150,10 +150,10 @@ public class DBAccess {
 
   public void delete(Book book) {
     try {
-      Class.forName("org.sqlite.JDBC"); //SQLite
-      //Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
-      conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
+      Class.forName("com.mysql.jdbc.Driver"); //MySQL
+      //Class.forName("org.sqlite.JDBC"); //SQLite
+      conn = DriverManager.getConnection("jdbc:mysql://mysql/books", USER, PASS); //MySQL
+      //conn = DriverManager.getConnection("jdbc:sqlite:webapps/books/WEB-INF/db/books.db"); //SQLite
       String sql = "DELETE FROM books WHERE isbn=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,book.getDelete());

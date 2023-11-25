@@ -22,7 +22,7 @@ public class Main extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     DBAccess db = new DBAccess(this.getServletContext());
-    db.create();
+    //db.create();
     String postId = request.getParameter("post");
     if (postId == null) {
       ArrayList<Post> posts = db.selectPostAll();

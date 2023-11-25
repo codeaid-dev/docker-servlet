@@ -19,8 +19,6 @@ import model.DBAccess;
 public class Main extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    DBAccess db = new DBAccess(this.getServletContext());
-    db.create();
     HashMap<String,String> survey = new HashMap<>();
     survey.put("name","");
     survey.put("email","");
