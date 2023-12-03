@@ -33,6 +33,7 @@ public class Login extends HttpServlet {
     User target = db.select(username);
     if (target != null && target.verifyPassword(password, true)) {
       HttpSession session = request.getSession(true);
+      session.setMaxInactiveInterval(60); //セッション有効期限60秒
       session.setAttribute("user", target);
       response.sendRedirect("/todo/");
     } else {

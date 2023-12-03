@@ -24,7 +24,7 @@ public class DBAccess {
   }
   public void create() {
     try {
-      Class.forName("com.mysql.jdbc.Driver"); //MySQL
+      Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
       conn = DriverManager.getConnection("jdbc:mysql://mysql/survey", USER, PASS); //MySQL
       //conn = DriverManager.getConnection("jdbc:sqlite:webapps/survey/WEB-INF/db/survey.db"); //SQLite

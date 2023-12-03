@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="model.Person" %>
 <%
-Person person = (Person)session.getAttribute("data");
+String username = (String)session.getAttribute("username");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -14,11 +12,10 @@ Person person = (Person)session.getAttribute("data");
 <body>
   <h1>セッションサンプル</h1>
   <p>
-    <%= person.getName() %>さんの趣味は、<br>
-    <c:out value="${data.hobby}" /><br>
-    です。
+    <%= username %> - ログイン中です。
   </p>
-  <a href="/sample/sscope">戻る</a>
+  <form action="/sample/sscope" method="post">
+    <button type="submit" name="logout">ログアウト</button>
+  </form>
 </body>
 </html>
-<% session.removeAttribute("data"); %>

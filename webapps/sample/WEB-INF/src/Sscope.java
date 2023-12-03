@@ -15,41 +15,63 @@ public class Sscope extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     response.setContentType("text/html; charset=UTF-8");
-    PrintWriter out = response.getWriter();
-    out.println("""
-      <!DOCTYPE html>
-      <html lang="ja">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>セッションサンプル</title>
-      </head>
-      <body>
-        <h1>セッションサンプル</h1>
-        <form action="/sample/sscope" method="POST">
-          <p><label>名前:<input type="text" name="name"></label></p>
-          <p><label>趣味:<input type="text" name="hobby"></label></p>
-          <button type="submit">表示</button>
-        </form>
-      </body>
-      </html>
-      """);
+    HttpSession session = request.getSession(false);
+    if (session == null || (session != null && session.getAttribute("username") == null)) {
+      PrintWriter out = response.getWriter();
+      out.println("""
+        <!DOCTYPE html>
+        <html lang="ja">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>セッションサンプル</title>
+        </head>
+        <body>
+          <h2>セッションサンプル</h2>
+          <form action="/sample/sscope" method="POST">
+            <p><label>ユーザー名:<input type="text" name="username"></label></p>
+            <p><label>パスワード:<input type="password" name="password"></label></p>
+            <button type="submit" name="login">ログイン</button>
+          </form>
+        </body>
+        </html>
+        """);
+    } else {
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sscope.jsp");
+      dispatcher.forward(request, response);
+    }
   }
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
-    String name = request.getParameter("name");
-    String hobby = request.getParameter("hobby");
-
-    Person person = new Person();
-    person.setName(escape(name));
-    person.setHobby(hobby);
-
+    response.setContentType("text/html; charset=UTF-8");
     HttpSession session = request.getSession();
-    session.setAttribute("data", person);
-
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sscope.jsp");
-    dispatcher.forward(request, response);
+    if (request.getParameter("login") != null) {
+      String username = request.getParameter("username");
+      String password = request.getParameter("password");
+      if (password.equals("1234")) {
+        session.setMaxInactiveInterval(30); //セッション有効期限30秒
+        session.setAttribute("username", escape(username));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sscope.jsp");
+        dispatcher.forward(request, response);
+      } else {
+        PrintWriter out = response.getWriter();
+        out.println("""
+          <head>
+            <title>セッションサンプル</title>
+          </head>
+          <body>
+            <h2>セッションサンプル</h2>
+            <p>パスワードが違います。</p>
+            <a href="/sample/sscope">トップ</a>
+          </body>
+          </html>
+          """);
+      }
+    } else {
+      session.removeAttribute("username"); //セッション破棄
+      response.sendRedirect("/sample/sscope");
+    }
   }
 
   private static String escape(String str) {

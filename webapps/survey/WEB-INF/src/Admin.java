@@ -23,6 +23,7 @@ public class Admin extends HttpServlet {
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out = response.getWriter();
     HttpSession session = request.getSession(false);
+    log("In admin.");
     if (session == null || (session != null && session.getAttribute("user") == null)) {
       response.sendRedirect("/survey/admin/login");
     } else {
