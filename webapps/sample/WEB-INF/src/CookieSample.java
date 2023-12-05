@@ -25,10 +25,10 @@ public class CookieSample extends HttpServlet {
       <body>
       <h1>Cookieサンプル</h1>
         """);
-    int count = 0;
+    int count = 1;
     boolean init = true;
     Cookie cookies[] = request.getCookies();
-    if (cookies != null && cookies.length > 0) {
+    if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("count")) {
           count = Integer.parseInt(cookie.getValue()) + 1;
@@ -41,8 +41,7 @@ public class CookieSample extends HttpServlet {
       }
     }
     if (init) {
-      count = 1;
-      out.println("<h2>アクセス数："+count+"回</h2>");
+     out.println("<h2>アクセス数："+count+"回</h2>");
       Cookie cookie = new Cookie("count", Integer.toString(count));
       cookie.setMaxAge(30); //30秒
       response.addCookie(cookie);
