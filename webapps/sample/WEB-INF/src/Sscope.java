@@ -8,8 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import model.Person;
-
 @WebServlet("/sscope")
 public class Sscope extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,13 +22,13 @@ public class Sscope extends HttpServlet {
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>セッションサンプル</title>
+          <title>Sessionサンプル</title>
         </head>
         <body>
-          <h2>セッションサンプル</h2>
+          <h2>Sessionサンプル</h2>
           <form action="/sample/sscope" method="POST">
-            <p><label>ユーザー名:<input type="text" name="username"></label></p>
-            <p><label>パスワード:<input type="password" name="password"></label></p>
+            <p><label>ユーザー名：<input type="text" name="username"></label></p>
+            <p><label>パスワード：<input type="password" name="password"></label></p>
             <button type="submit" name="login">ログイン</button>
           </form>
         </body>
@@ -58,10 +56,10 @@ public class Sscope extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("""
           <head>
-            <title>セッションサンプル</title>
+            <title>Sessionサンプル</title>
           </head>
           <body>
-            <h2>セッションサンプル</h2>
+            <h2>Sessionサンプル</h2>
             <p>パスワードが違います。</p>
             <a href="/sample/sscope">トップ</a>
           </body>

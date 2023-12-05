@@ -21,10 +21,10 @@ public class Rscope extends HttpServlet {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>リクエストスコープサンプル</title>
+        <title>リクエストスコープ</title>
       </head>
       <body>
-        <h1>リクエストスコープサンプル</h1>
+        <h1>リクエストスコープ</h1>
         <form action="/sample/rscope" method="POST">
           <p><label>名前:<input type="text" name="name"></label></p>
           <p><label>趣味:<input type="text" name="hobby"></label></p>

@@ -10,10 +10,10 @@ Person person = (Person)request.getAttribute("data");
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
-  <title>リクエストスコープサンプル</title>
+  <title>リクエストスコープ</title>
 </head>
 <body>
-  <h1>リクエストスコープサンプル</h1>
+  <h1>リクエストスコープ</h1>
   <p>
     <%= person.getName() %>さんの趣味は、<br>
     <c:out value="${data.hobby}" /><br>

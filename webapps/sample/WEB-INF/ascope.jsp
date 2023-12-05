@@ -9,10 +9,10 @@ Person person = (Person)application.getAttribute("data");
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アプリケーションサンプル</title>
+  <title>アプリケーションスコープ</title>
 </head>
 <body>
-  <h1>アプリケーションサンプル</h1>
+  <h1>アプリケーションスコープ</h1>
   <p>
     <%= person.getName() %>さんの趣味は、<br>
     <c:out value="${data.hobby}" /><br>

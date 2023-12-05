@@ -22,10 +22,10 @@ public class Ascope extends HttpServlet {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>アプリケーションサンプル</title>
+        <title>アプリケーションスコープ</title>
       </head>
       <body>
-        <h1>アプリケーションサンプル</h1>
+        <h1>アプリケーションスコープ</h1>
         <form action="/sample/ascope" method="POST">
           <p><label>名前:<input type="text" name="name"></label></p>
           <p><label>趣味:<input type="text" name="hobby"></label></p>
