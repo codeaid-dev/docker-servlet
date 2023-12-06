@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
-public class SQLiteSample2 {
+public class SQLitePlaceholder {
   public static void main(String[] args) throws SQLException {
     String dbname = "sample.db";
     Connection conn = null;

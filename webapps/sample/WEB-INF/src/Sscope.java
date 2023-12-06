@@ -17,11 +17,8 @@ public class Sscope extends HttpServlet {
     if (session == null || (session != null && session.getAttribute("username") == null)) {
       PrintWriter out = response.getWriter();
       out.println("""
-        <!DOCTYPE html>
         <html lang="ja">
         <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Sessionサンプル</title>
         </head>
         <body>
@@ -55,6 +52,7 @@ public class Sscope extends HttpServlet {
       } else {
         PrintWriter out = response.getWriter();
         out.println("""
+          <html lang="ja">
           <head>
             <title>Sessionサンプル</title>
           </head>
