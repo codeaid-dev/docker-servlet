@@ -35,6 +35,7 @@ public class DBAccess {
                 password VARCHAR(256) NOT NULL
                 )""";
       stmt.executeUpdate(sql);
+      //MySQL
       sql = """
             CREATE TABLE IF NOT EXISTS answers (
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -46,6 +47,18 @@ public class DBAccess {
                 maker VARCHAR(256) NOT NULL,
                 comments VARCHAR(256)
                 )""";
+      //SQLite
+      /*sql = """
+              CREATE TABLE IF NOT EXISTS answers (
+                created_at DATETIME DEFAULT (DATETIME('now','localtime')),
+                name VARCHAR(256) NOT NULL,
+                email VARCHAR(256) NOT NULL PRIMARY KEY,
+                age VARCHAR(256) NOT NULL,
+                program VARCHAR(256),
+                pc VARCHAR(256) NOT NULL,
+                maker VARCHAR(256) NOT NULL,
+                comments VARCHAR(256)
+                )""";*/
       stmt.executeUpdate(sql);
     } catch (Exception e) {
       app.log(e.getMessage(), e);

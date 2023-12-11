@@ -38,6 +38,7 @@ public class DBAccess {
                 password VARCHAR(256) NOT NULL
                 )""";
       stmt.executeUpdate(sql);
+      //MySQL
       sql = """
           CREATE TABLE IF NOT EXISTS posts (
             id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -46,6 +47,22 @@ public class DBAccess {
             title VARCHAR(256) NOT NULL,
             article VARCHAR(256) NOT NULL
           )""";
+      //SQLite
+      /*sql = """
+          CREATE TABLE IF NOT EXISTS posts (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            created_at DATETIME DEFAULT (DATETIME('now','localtime')),
+            updated_at DATETIME DEFAULT (DATETIME('now','localtime')),
+            title VARCHAR(256) NOT NULL,
+            article VARCHAR(256) NOT NULL
+            )""";
+      stmt.executeUpdate(sql);
+      sql = """
+          CREATE TRIGGER IF NOT EXISTS trigger_updated_at AFTER UPDATE ON posts
+              BEGIN
+                UPDATE posts SET updated_at = DATETIME('now', 'localtime') WHERE rowid == NEW.rowid;
+              END
+            """;*/
       stmt.executeUpdate(sql);
     } catch (Exception e) {
       app.log(e.getMessage(), e);
