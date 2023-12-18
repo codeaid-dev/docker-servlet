@@ -69,6 +69,6 @@ ArrayList<HashMap<String,String>> survey = (ArrayList<HashMap<String,String>>)se
     <button type="submit" name="delall" style="margin-left:20px;">全て削除</button></p>
   </form>
   <p><a href="/survey/admin/logout">ログアウト</a>
-  <a href="/survey/admin/delete" style="margin-left: 20px;">ユーザー登録解除</a></p>
+  <a href="/survey/admin/delete" style="margin-left: 20px;">管理者登録解除</a></p>
 </body>
 </html>

@@ -41,7 +41,7 @@ public class DBAccess {
       //MySQL
       sql = """
           CREATE TABLE IF NOT EXISTS posts (
-            id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             title VARCHAR(256) NOT NULL,

@@ -11,7 +11,7 @@ String username = (String)request.getAttribute("username");
   <title>アンケート</title>
 </head>
 <body>
-  <p><%= User.escape(username) %>のユーザー登録を解除しました。</p>
-  <p><a href="/blog/admin/signup">ユーザー登録</a></p>
+  <p><%= User.escape(username) %>の管理者登録を解除しました。</p>
+  <p><a href="/blog/admin/signup">管理者登録</a></p>
 </body>
 </html>

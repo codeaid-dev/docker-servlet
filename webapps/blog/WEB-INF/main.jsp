@@ -29,6 +29,6 @@ ArrayList<Post> posts = (ArrayList<Post>)request.getAttribute("blog");
     <p>記事がありません。</p>
   <% } %>
   <p><a href="/blog/admin/logout">ログアウト</a>
-  <a href="/blog/admin/delete" style="margin-left: 20px;">ユーザー登録解除</a></p>
+  <a href="/blog/admin/delete" style="margin-left: 20px;">管理者登録解除</a></p>
 </body>
 </html>

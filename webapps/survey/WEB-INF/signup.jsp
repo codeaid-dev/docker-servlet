@@ -10,12 +10,12 @@ String error = (String)request.getAttribute("error");
   <title>アンケート</title>
 </head>
 <body>
-  <h1>ユーザー登録</h1>
+  <h1>管理者登録</h1>
   <% if (error!=null) { %>
     <p><%= error %></p>
   <% } %>
   <form action="/survey/admin/signup" method="post">
-    <p><label>名前：<input type="text" name="username" required></label><br>
+    <p><label>管理者名：<input type="text" name="username" required></label><br>
     <label>パスワード：<input type="password" name="password" required></label></p>
     <button type="submit" name="signup">登録</button>
   </form>
