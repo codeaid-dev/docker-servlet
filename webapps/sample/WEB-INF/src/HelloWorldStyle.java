@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/helloworld")
-public class HelloWorld extends HttpServlet {
+@WebServlet("/helloworldstyle")
+public class HelloWorldStyle extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");
@@ -19,6 +19,7 @@ public class HelloWorld extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html lang=\"ja\"><head>");
         out.println("<meta charset=\"UTF-8\"><title>サンプル</title>");
+        out.println("<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/style.css\"");
         out.println("</head><body>");
         out.println("<h1>サンプルページ</h1>");
         out.println("<p>Hello World!</p>");

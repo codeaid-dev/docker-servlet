@@ -13,7 +13,7 @@ public class MySQLSample {
     Connection conn = null;
     Statement stmt = null;
     try {
-      Class.forName("com.mysql.jdbc.Driver");
+      Class.forName("com.mysql.cj.jdbc.Driver");
       conn = DriverManager.getConnection("jdbc:mysql://"+ hostname + "/" + dbname, username, password);
       System.out.println("接続成功");
 
