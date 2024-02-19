@@ -66,6 +66,7 @@ public class Sscope extends HttpServlet {
       }
     } else {
       session.removeAttribute("username"); //セッション破棄
+      session.invalidate();
       response.sendRedirect("/sample/sscope");
     }
   }
