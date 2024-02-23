@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,28 +32,36 @@ public class Signup extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
     String username = request.getParameter("username");
     String password = request.getParameter("password");
-    User user = new User(username);
-    user.setPassword(password, true);
-    DBAccess db = new DBAccess(this.getServletContext());
-    if (db.existUser(username)) {
-      request.setAttribute("error","登録済ユーザーです。");
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
-      dispatcher.forward(request, response);
-    } else {
-      Pattern p = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!-\\/:-@\\[-`{-~])[!-~]{8,32}$");
-      Matcher m = p.matcher(password);
-      if (!m.matches()) {
-        request.setAttribute("error","パスワードは8~32文字で大小文字英字数字記号をそれぞれ1文字以上含める必要があります。");
+    try {
+      DBAccess db = new DBAccess();
+      if (db.existUser(username)) {
+        request.setAttribute("error","登録済ユーザーです。");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
         dispatcher.forward(request, response);
       } else {
-        db.insert(user);
-        HttpSession session = request.getSession(true);
-        session.setAttribute("user", user);
-        response.sendRedirect("/todo/");
+        Pattern p = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!-\\/:-@\\[-`{-~])[!-~]{8,32}$");
+        Matcher m = p.matcher(password);
+        if (!m.matches()) {
+          request.setAttribute("error","パスワードは8~32文字で大小文字英字数字記号をそれぞれ1文字以上含める必要があります。");
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
+          dispatcher.forward(request, response);
+        } else {
+          User user = new User(username);
+          String salt = user.generateSalt();
+          password = user.hashPassword(password, salt);
+          user.setPassword(password);
+          db.insert(user);
+          HttpSession session = request.getSession(true);
+          session.setAttribute("user", user);
+          response.sendRedirect("/todo/");
+        }
       }
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
   }
 }

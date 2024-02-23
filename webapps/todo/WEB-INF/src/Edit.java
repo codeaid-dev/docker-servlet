@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +19,9 @@ import model.DBAccess;
 public class Edit extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+    request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
     HttpSession session = request.getSession(false);
     if (session == null) {
       response.sendRedirect("/todo/login");
@@ -29,10 +34,14 @@ public class Edit extends HttpServlet {
           response.sendRedirect("/todo/");
         } else {
           // ToDo削除
-          DBAccess db = new DBAccess(this.getServletContext());
-          db.deleteTask(user,id);
-          user.removeTask(id);
-          response.sendRedirect("/todo/");
+          DBAccess db = new DBAccess();
+          try {
+            db.deleteTask(user,id);
+            user.removeTask(id);
+            response.sendRedirect("/todo/");
+          } catch (Exception e) {
+            out.println(e.getMessage());
+          }
         }
       } else {
         // ToDo編集表示
@@ -47,12 +56,18 @@ public class Edit extends HttpServlet {
         throws ServletException, IOException {
     // 編集したToDoをDBに保存しトップへリダイレクト
     request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
     String task = request.getParameter("task");
     HttpSession session = request.getSession();
     User user = (User)session.getAttribute("user");
     user.setTask(task);
-    DBAccess db = new DBAccess(this.getServletContext());
-    db.update("tasks", user);
-    response.sendRedirect("/todo/");
+    DBAccess db = new DBAccess();
+    try {
+      db.update("tasks", user);
+      response.sendRedirect("/todo/");
+    } catch (Exception e) {
+      out.println(e.getMessage());
+    }
   }
 }

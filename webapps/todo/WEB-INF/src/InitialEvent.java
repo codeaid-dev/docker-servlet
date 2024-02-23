@@ -8,9 +8,12 @@ import model.DBAccess;
 @WebListener
 public class InitialEvent implements ServletContextListener {
   public void contextInitialized(ServletContextEvent sce) {
-    DBAccess db = new DBAccess(sce.getServletContext());
-    db.create();
-    //sce.getServletContext().log("DB Table create done.");
+    DBAccess db = new DBAccess();
+    try {
+      db.create();
+    } catch (Exception e) {
+      sce.getServletContext().log(e.getMessage());
+    }
   }
   public void contextDestroyed(ServletContextEvent sce) {}
 }

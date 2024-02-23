@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -27,19 +29,25 @@ public class Login extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
     String username = request.getParameter("username");
     String password = request.getParameter("password");
-    DBAccess db = new DBAccess(this.getServletContext());
-    User target = db.select(username);
-    if (target != null && target.verifyPassword(password, true)) {
-      HttpSession session = request.getSession(true);
-      session.setMaxInactiveInterval(60); //セッション有効期限60秒
-      session.setAttribute("user", target);
-      response.sendRedirect("/todo/");
-    } else {
-      request.setAttribute("error","ログイン失敗");
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
-      dispatcher.forward(request, response);
+    DBAccess db = new DBAccess();
+    try {
+      User target = db.select(username);
+      if (target != null && target.verifyPassword(password)) {
+        HttpSession session = request.getSession(true);
+        session.setMaxInactiveInterval(60); //セッション有効期限60秒
+        session.setAttribute("user", target);
+        response.sendRedirect("/todo/");
+      } else {
+        request.setAttribute("error","ログイン失敗");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
+        dispatcher.forward(request, response);
+      }
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
   }
 }
