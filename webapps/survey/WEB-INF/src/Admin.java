@@ -22,50 +22,54 @@ public class Admin extends HttpServlet {
     request.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out = response.getWriter();
-    HttpSession session = request.getSession(false);
-    log("In admin.");
-    if (session == null || (session != null && session.getAttribute("user") == null)) {
-      response.sendRedirect("/survey/admin/login");
-    } else {
-      DBAccess db = new DBAccess(this.getServletContext());
-      ArrayList<HashMap<String,String>> survey = db.selectSurvey();
-      for (HashMap<String,String> row : survey) {
-        row.put("name",db.escape(row.get("name")));
-        row.put("email",db.escape(row.get("email")));
-        row.put("comments",db.escape(row.get("comments")));
+    try {
+      HttpSession session = request.getSession(false);
+      if (session == null || (session != null && session.getAttribute("user") == null)) {
+        response.sendRedirect("/survey/admin/login");
+      } else {
+        ArrayList<HashMap<String,String>> survey = DBAccess.selectSurvey();
+        for (HashMap<String,String> row : survey) {
+          row.put("name",User.escape(row.get("name")));
+          row.put("email",User.escape(row.get("email")));
+          row.put("comments",User.escape(row.get("comments")));
+        }
+        session.setAttribute("survey",survey);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
+        dispatcher.forward(request, response);
       }
-      session.setAttribute("survey",survey);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
-      dispatcher.forward(request, response);
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
   }
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
-    DBAccess db = new DBAccess(this.getServletContext());
-    String email = request.getParameter("delete");
-    if (email != null && !email.isEmpty()) {
-      db.deleteSurvey(email);
-    }
-    if (request.getParameter("delall") != null) {
-      db.deleteSurveyAll();
-    }
-    if (request.getParameter("download") != null) {
-      String filename = "download.csv";
-      response.setHeader("Content-Type","text/csv; charset=utf-8");
-      response.setHeader("Content-Disposition","attachment; filename=\""+filename+"\"");
-      try (PrintWriter out = response.getWriter()) {
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
+    try {
+      String email = request.getParameter("delete");
+      if (email != null && !email.isEmpty()) {
+        DBAccess.deleteSurvey(email);
+      }
+      if (request.getParameter("delall") != null) {
+        DBAccess.deleteSurveyAll();
+      }
+      if (request.getParameter("download") != null) {
+        String filename = "download.csv";
+        response.setHeader("Content-Type","text/csv; charset=utf-8");
+        response.setHeader("Content-Disposition","attachment; filename=\""+filename+"\"");
         String str = "回答日時,名前,メールアドレス,年齢,興味のあるプログラム言語,学習に使っているパソコン,パソコンメーカー,コメント\n";
-        ArrayList<HashMap<String,String>> survey = db.selectSurvey();
+        ArrayList<HashMap<String,String>> survey = DBAccess.selectSurvey();
         for (HashMap<String,String> row : survey) {
           str += row.get("created_at")+","+row.get("name")+","+row.get("email")+","+row.get("age")+","+row.get("program")+","+row.get("pc")+","+row.get("maker")+","+"\""+row.get("comments")+"\""+"\n";
         }
         out.print(str);
-      } catch (IOException e) {
-        log(e.getMessage(), e);
+        return;
       }
+      response.sendRedirect("/survey/admin");
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
-    response.sendRedirect("/survey/admin");
   }
 }

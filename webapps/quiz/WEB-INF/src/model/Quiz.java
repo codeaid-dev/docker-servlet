@@ -28,6 +28,7 @@ public class Quiz implements Serializable {
   public String getInfo() { return this.info; }
   public void setInfo(String info) { this.info = info; }
   public void resetInfo() { this.info = ""; }
+
   public static String escape(String str) {
     if (str != null) {
       str = str.replaceAll("&","&amp;");

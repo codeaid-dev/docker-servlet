@@ -1,7 +1,6 @@
 package model;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Book implements Serializable {
   private String isbn;
@@ -37,6 +36,7 @@ public class Book implements Serializable {
   public ArrayList<String> getInfo() { return this.info; }
   public void setInfo(String inf) { this.info.add(inf); }
   public void resetInfo() { this.info.clear(); }
+
   public static String escape(String str) {
     if (str != null) {
       str = str.replaceAll("&","&amp;");

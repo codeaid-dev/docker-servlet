@@ -1,47 +1,50 @@
 package model;
-import java.io.Serializable;
+
+import java.util.Base64;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
-public class User implements Serializable {
+public class User {
   private String username;
   private String password;
-  private static final String ALG = "SHA-256";
-	/* ソルト値 */
-	private static final String SALT = "uMoJL3h90SenH7:r";
   public User() {}
   public User(String username) { this.username = username; }
   public String getUsername() { return this.username; }
   public void setUsername(String username) { this.username = username; }
   public String getPassword() { return this.password; }
-  public void setPassword(String password, boolean flag) {
-    if (flag) {
-      this.password = toHash(password);
-    } else {
-      this.password = password;
-    }
+  public void setPassword(String password) { this.password = password; }
+
+  public static String generateSalt() {
+    SecureRandom random = new SecureRandom();
+    byte[] salttmp = new byte[16];
+    random.nextBytes(salttmp);
+    return Base64.getEncoder().encodeToString(salttmp);
   }
-  public boolean verifyPassword(String password, boolean flag) {
-    if (flag) {
-      password = toHash(password);
-    }
-    return password.equals(this.password);
-  }
-  public String toHash(String data) {
-    String target = data + SALT;
-    String hash = null;
+
+  public static String hashPassword(String password, String salt) throws NoSuchAlgorithmException {
     try {
-      MessageDigest md = MessageDigest.getInstance(ALG);
-      md.update(target.getBytes());
-      byte[] digest = md.digest();
-      hash = new String(digest, "UTF-8");
+      MessageDigest md = MessageDigest.getInstance("SHA-256");
+      md.update(Base64.getDecoder().decode(salt));
+      byte[] hashedPassword = md.digest(password.getBytes());
+
+      String hash = Base64.getEncoder().encodeToString(hashedPassword);
+      return salt + hash;
     } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    } catch (Exception e) {
-      e.printStackTrace();
+      throw e;
     }
-    return hash;
   }
+
+  public boolean verifyPassword(String password) throws NoSuchAlgorithmException {
+    String salt = this.password.substring(0,24);
+    try {
+      String verify = hashPassword(password, salt);
+      return verify.equals(this.password);
+    } catch (NoSuchAlgorithmException e) {
+      throw e;
+    }
+  }
+
   public static String escape(String str) {
     if (str != null) {
       str = str.replaceAll("&","&amp;");

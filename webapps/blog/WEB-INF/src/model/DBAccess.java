@@ -22,10 +22,9 @@ public class DBAccess {
   private final String PASS = "password";
   private Connection conn = null;
   private ServletContext app = null; // for Logging
-  public DBAccess(ServletContext app) {
-    this.app = app;
-  }
-  public void create() {
+  public DBAccess() {}
+
+  public void create() throws Exception,SQLException {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -65,19 +64,17 @@ public class DBAccess {
             """;*/
       stmt.executeUpdate(sql);
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void addPost(String title, String article) {
+  public void addPost(String title, String article) throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -87,21 +84,19 @@ public class DBAccess {
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,title);
       pstmt.setString(2,article);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void addUser(User user) {
+  public void addUser(User user) throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -111,21 +106,19 @@ public class DBAccess {
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,user.getUsername());
       pstmt.setString(2,user.getPassword());
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public boolean existUser() {
+  public boolean existUser() throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -137,20 +130,17 @@ public class DBAccess {
       rs = pstmt.executeQuery();
       return rs.next();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return false;
   }
 
-  public User selectUser(String username) {
+  public User selectUser(String username) throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -165,24 +155,22 @@ public class DBAccess {
         String password = rs.getString("password");
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password, false);
+        user.setPassword(password);
         return user;
       }
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
     return null;
   }
 
-  public ArrayList<Post> selectPostAll() {
+  public ArrayList<Post> selectPostAll() throws Exception,SQLException {
     ArrayList<Post> result = new ArrayList<>();
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
@@ -214,20 +202,17 @@ public class DBAccess {
       }
       return result;
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return result;
   }
 
-    public Post selectPost(int id) {
+  public Post selectPost(int id) throws Exception,SQLException {
     Post result = new Post();
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
@@ -258,20 +243,17 @@ public class DBAccess {
       }
       return result;
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return result;
   }
 
-  public void deletePost(int id) {
+  public void deletePost(int id) throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -281,21 +263,19 @@ public class DBAccess {
       String sql = "DELETE FROM posts WHERE id=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setInt(1,id);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void deletePostAll() {
+  public void deletePostAll() throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -304,21 +284,19 @@ public class DBAccess {
 
       String sql = "DELETE FROM posts";
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void deleteUser() {
+  public void deleteUser() throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -327,21 +305,19 @@ public class DBAccess {
 
       String sql = "DELETE FROM siteadmin";
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void updatePost(int id,String title,String article) {
+  public void updatePost(int id,String title,String article) throws Exception,SQLException {
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -353,16 +329,14 @@ public class DBAccess {
       pstmt.setString(1,title);
       pstmt.setString(2,article);
       pstmt.setInt(3,id);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }

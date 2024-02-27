@@ -33,9 +33,8 @@ public class Login extends HttpServlet {
     PrintWriter out = response.getWriter();
     String username = request.getParameter("username");
     String password = request.getParameter("password");
-    DBAccess db = new DBAccess();
     try {
-      User target = db.select(username);
+      User target = DBAccess.select(username);
       if (target != null && target.verifyPassword(password)) {
         HttpSession session = request.getSession(true);
         session.setMaxInactiveInterval(60); //セッション有効期限60秒

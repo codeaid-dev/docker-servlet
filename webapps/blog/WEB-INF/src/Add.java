@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 
-import model.User;
-import model.Post;
 import model.DBAccess;
 
 @WebServlet("/admin/add")
@@ -21,7 +19,6 @@ public class Add extends HttpServlet {
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
-    PrintWriter out = response.getWriter();
     HttpSession session = request.getSession(false);
     if (session == null || (session != null && session.getAttribute("user") == null)) {
       response.sendRedirect("/blog/admin/login");
@@ -35,10 +32,15 @@ public class Add extends HttpServlet {
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
-    String title = request.getParameter("title");
-    String article = request.getParameter("article");
-    DBAccess db = new DBAccess(this.getServletContext());
-    db.addPost(title, article);
-    response.sendRedirect("/blog/admin");
+    PrintWriter out = response.getWriter();
+    try {
+      String title = request.getParameter("title");
+      String article = request.getParameter("article");
+      DBAccess db = new DBAccess();
+      db.addPost(title, article);
+      response.sendRedirect("/blog/admin");
+    } catch (Exception e) {
+      out.println(e.getMessage());
+    }
   }
 }

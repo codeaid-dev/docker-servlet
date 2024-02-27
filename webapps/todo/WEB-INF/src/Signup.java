@@ -37,8 +37,7 @@ public class Signup extends HttpServlet {
     String username = request.getParameter("username");
     String password = request.getParameter("password");
     try {
-      DBAccess db = new DBAccess();
-      if (db.existUser(username)) {
+      if (DBAccess.existUser(username)) {
         request.setAttribute("error","登録済ユーザーです。");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
         dispatcher.forward(request, response);
@@ -54,7 +53,7 @@ public class Signup extends HttpServlet {
           String salt = user.generateSalt();
           password = user.hashPassword(password, salt);
           user.setPassword(password);
-          db.insert(user);
+          DBAccess.insert(user);
           HttpSession session = request.getSession(true);
           session.setAttribute("user", user);
           response.sendRedirect("/todo/");

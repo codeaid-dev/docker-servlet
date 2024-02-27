@@ -37,10 +37,9 @@ public class Main extends HttpServlet {
     String task = request.getParameter("task");
     HttpSession session = request.getSession();
     User user = (User)session.getAttribute("user");
-    DBAccess db = new DBAccess();
     try {
-      db.insert(user.getUsername(), task);
-      user = db.select(user.getUsername());
+      DBAccess.insert(user.getUsername(), task);
+      user = DBAccess.select(user.getUsername());
       session.setAttribute("user", user);
       response.sendRedirect("/todo/");
     } catch (Exception e) {

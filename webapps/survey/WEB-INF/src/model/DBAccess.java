@@ -15,14 +15,12 @@ import jakarta.servlet.ServletContext;
 import model.User;
 
 public class DBAccess {
-  private final String USER = "root";
-  private final String PASS = "password";
-  private Connection conn = null;
-  private ServletContext app = null; // for Logging
-  public DBAccess(ServletContext app) {
-    this.app = app;
-  }
-  public void create() {
+  private static final String USER = "root";
+  private static final String PASS = "password";
+  public DBAccess() {}
+
+  public static void create() throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -61,19 +59,18 @@ public class DBAccess {
                 )""";*/
       stmt.executeUpdate(sql);
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void addSurvey(String[] columns) {
+  public static void addSurvey(String[] columns) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -90,19 +87,18 @@ public class DBAccess {
       pstmt.setString(7,columns[6]);
       int num = pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void addUser(User user) {
+  public static void addUser(User user) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -114,19 +110,18 @@ public class DBAccess {
       pstmt.setString(2,user.getPassword());
       int num = pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public boolean existUser() {
+  public static boolean existUser() throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -138,20 +133,18 @@ public class DBAccess {
       rs = pstmt.executeQuery();
       return rs.next();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return false;
   }
 
-  public User selectUser(String username) {
+  public static User selectUser(String username) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -166,24 +159,23 @@ public class DBAccess {
         String password = rs.getString("password");
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password, false);
+        user.setPassword(password);
         return user;
       }
+      return null;
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return null;
   }
 
-  public boolean existMail(String email) {
+  public static boolean existMail(String email) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -196,20 +188,18 @@ public class DBAccess {
       rs = pstmt.executeQuery();
       return rs.next();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return false;
   }
 
-  public ArrayList<HashMap<String,String>> selectSurvey() {
+  public static ArrayList<HashMap<String,String>> selectSurvey() throws Exception,SQLException {
+    Connection conn = null;
     ArrayList<HashMap<String,String>> result = new ArrayList<>();
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
@@ -234,20 +224,18 @@ public class DBAccess {
       }
       return result;
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return result;
   }
 
-  public void deleteSurvey(String email) {
+  public static void deleteSurvey(String email) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -257,20 +245,19 @@ public class DBAccess {
       String sql = "DELETE FROM answers WHERE email=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,email);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
-  public void deleteSurveyAll() {
+  public static void deleteSurveyAll() throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -279,20 +266,19 @@ public class DBAccess {
 
       String sql = "DELETE FROM answers";
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
-  public void deleteUser() {
+  public static void deleteUser() throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -301,29 +287,15 @@ public class DBAccess {
 
       String sql = "DELETE FROM siteadmin";
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-  }
-
-  public static String escape(String str) {
-    if (str != null) {
-      str = str.replaceAll("&","&amp;");
-      str = str.replaceAll("<","&lt;");
-      str = str.replaceAll(">","&gt;");
-      str = str.replaceAll("'","&#39;");
-      str = str.replaceAll("\"","&quot;");
-      return str;
-    }
-    return null;
   }
 }

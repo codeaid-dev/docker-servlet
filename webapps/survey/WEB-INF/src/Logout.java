@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import model.User;
-import model.DBAccess;
 
 @WebServlet("/admin/logout")
 public class Logout extends HttpServlet {
@@ -18,7 +17,7 @@ public class Logout extends HttpServlet {
     if (session != null) {
       User user = (User)session.getAttribute("user");
       if (user != null) {
-        String username = user.getUsername();
+        String username = User.escape(user.getUsername());
         session.invalidate();
         request.setAttribute("username",username);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/logout.jsp");

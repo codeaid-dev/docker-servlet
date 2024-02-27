@@ -15,14 +15,12 @@ import jakarta.servlet.ServletContext;
 import model.Book;
 
 public class DBAccess {
-  private final String USER = "root";
-  private final String PASS = "password";
-  private Connection conn = null;
-  private ServletContext app = null; // for Logging
-  public DBAccess(ServletContext app) {
-    this.app = app;
-  }
-  public void create() {
+  private static final String USER = "root";
+  private static final String PASS = "password";
+  public DBAccess() {}
+
+  public static void create() throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -39,19 +37,18 @@ public class DBAccess {
         Statement stmt =  conn.createStatement();
         stmt.executeUpdate(sql);
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void insert(Book book) {
+  public static void insert(Book book) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -64,21 +61,20 @@ public class DBAccess {
       pstmt.setInt(3,Integer.parseInt(book.getPrice()));
       pstmt.setInt(4,Integer.parseInt(book.getPage()));
       pstmt.setString(5,book.getDate());
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public ArrayList<Book> select(String... keyword) {
+  public static ArrayList<Book> select(String... keyword) throws Exception,SQLException {
+    Connection conn = null;
     ArrayList<Book> result = new ArrayList<Book>();
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
@@ -89,7 +85,6 @@ public class DBAccess {
       if (keyword.length != 0) {
         String name = "%"+keyword[0]+"%";
         String sql = "SELECT * FROM books WHERE isbn=? OR name LIKE ?";
-        app.log(keyword[0] + " " + name);
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,keyword[0]);
         pstmt.setString(2,name);
@@ -108,20 +103,19 @@ public class DBAccess {
         result.add(new Book(isbn,name,price,page,date));
       }
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
     return result;
   }
 
-  public void update(Book book) {
+  public static void update(Book book) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -134,21 +128,20 @@ public class DBAccess {
       pstmt.setInt(3,Integer.parseInt(book.getPage()));
       pstmt.setString(4,book.getDate());
       pstmt.setString(5,book.getISBN());
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void delete(Book book) {
+  public static void delete(Book book) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -157,16 +150,14 @@ public class DBAccess {
       String sql = "DELETE FROM books WHERE isbn=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,book.getDelete());
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }

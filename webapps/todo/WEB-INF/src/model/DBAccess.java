@@ -15,14 +15,12 @@ import jakarta.servlet.ServletContext;
 import model.User;
 
 public class DBAccess {
-  private final String USER = "root";
-  private final String PASS = "password";
-  private Connection conn = null;
-  private ServletContext app = null; // for Logging
-
+  private static final String USER = "root";
+  private static final String PASS = "password";
   public DBAccess() {}
 
-  public void create() throws Exception,SQLException {
+  public static void create() throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -55,7 +53,8 @@ public class DBAccess {
     }
   }
 
-  public void insert(String username, String task) throws Exception,SQLException {
+  public static void insert(String username, String task) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -65,7 +64,7 @@ public class DBAccess {
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,username);
       pstmt.setString(2,task);
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
       throw e;
     } finally {
@@ -77,7 +76,8 @@ public class DBAccess {
     }
   }
 
-  public void insert(User user) throws Exception,SQLException {
+  public static void insert(User user) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -87,7 +87,7 @@ public class DBAccess {
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,user.getUsername());
       pstmt.setString(2,user.getPassword());
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
       throw e;
     } finally {
@@ -99,7 +99,8 @@ public class DBAccess {
     }
   }
 
-  public boolean existUser(String username) throws Exception,SQLException {
+  public static boolean existUser(String username) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -125,7 +126,8 @@ public class DBAccess {
     return false;
   }
 
-  public User select(String username) throws Exception,SQLException {
+  public static User select(String username) throws Exception,SQLException {
+    Connection conn = null;
     User result = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
@@ -166,7 +168,8 @@ public class DBAccess {
     return result;
   }
 
-  public void update(String table, User user) throws Exception,SQLException {
+  public static void update(String table, User user) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -177,7 +180,7 @@ public class DBAccess {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,user.getTask());
         pstmt.setInt(2,Integer.parseInt(user.getEditId()));
-        int num = pstmt.executeUpdate();
+        pstmt.executeUpdate();
       }
     } catch (Exception e) {
       throw e;
@@ -190,7 +193,8 @@ public class DBAccess {
     }
   }
 
-  public void delete(User user) throws Exception,SQLException {
+  public static void delete(User user) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -200,12 +204,12 @@ public class DBAccess {
       String sql = "DELETE FROM tasks WHERE username=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,user.getUsername());
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
 
       sql = "DELETE FROM users WHERE username=?";
       pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,user.getUsername());
-      num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
 
     } catch (Exception e) {
       throw e;
@@ -218,7 +222,8 @@ public class DBAccess {
     }
   }
 
-  public void deleteTask(User user, String id) throws Exception,SQLException {
+  public static void deleteTask(User user, String id) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -227,7 +232,7 @@ public class DBAccess {
       String sql = "DELETE FROM tasks WHERE id=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setInt(1,Integer.parseInt(id));
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
       throw e;
     } finally {

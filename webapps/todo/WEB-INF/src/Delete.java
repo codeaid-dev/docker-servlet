@@ -28,9 +28,8 @@ public class Delete extends HttpServlet {
       String username = user.getUsername();
       session.invalidate();
       request.setAttribute("username",username);
-      DBAccess db = new DBAccess();
       try {
-        db.delete(user);
+        DBAccess.delete(user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/delete.jsp");
         dispatcher.forward(request, response);
       } catch (Exception e) {

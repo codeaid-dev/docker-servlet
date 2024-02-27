@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="model.User" %>
 <%
 String username = (String)request.getAttribute("username");
 %>
@@ -11,7 +10,7 @@ String username = (String)request.getAttribute("username");
   <title>アンケート</title>
 </head>
 <body>
-  <p><%= User.escape(username) %>の管理者登録を解除しました。</p>
+  <p><%= username %>の管理者登録を解除しました。</p>
   <p><a href="/survey/admin/signup">管理者登録</a></p>
 </body>
 </html>

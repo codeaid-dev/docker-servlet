@@ -34,9 +34,8 @@ public class Edit extends HttpServlet {
           response.sendRedirect("/todo/");
         } else {
           // ToDo削除
-          DBAccess db = new DBAccess();
           try {
-            db.deleteTask(user,id);
+            DBAccess.deleteTask(user,id);
             user.removeTask(id);
             response.sendRedirect("/todo/");
           } catch (Exception e) {
@@ -62,9 +61,8 @@ public class Edit extends HttpServlet {
     HttpSession session = request.getSession();
     User user = (User)session.getAttribute("user");
     user.setTask(task);
-    DBAccess db = new DBAccess();
     try {
-      db.update("tasks", user);
+      DBAccess.update("tasks", user);
       response.sendRedirect("/todo/");
     } catch (Exception e) {
       out.println(e.getMessage());

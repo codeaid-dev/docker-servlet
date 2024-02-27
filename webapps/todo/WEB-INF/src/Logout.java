@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import model.User;
-import model.DBAccess;
 
 @WebServlet("/logout")
 public class Logout extends HttpServlet {

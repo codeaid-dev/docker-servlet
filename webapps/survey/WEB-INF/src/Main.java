@@ -55,45 +55,48 @@ public class Main extends HttpServlet {
     survey.put("comments",comments);
     request.setAttribute("survey", survey);
 
-    DBAccess db = new DBAccess(this.getServletContext());
-    if (db.existMail(email)) {
-      survey.put("error","すでにこのメールアドレスで回答済みです。");
-    } else {
-      Pattern p = Pattern.compile("[!-~]+@[\\w\\-.]+\\.[a-zA-Z]+");
-      Matcher m = p.matcher(email);
-      if (!m.matches()) {
-        survey.put("error","正しいメールアドレスを入力してください。");
+    try {
+      if (DBAccess.existMail(email)) {
+        survey.put("error","すでにこのメールアドレスで回答済みです。");
       } else {
-        String[] columns = {name,email,age,program,pc,maker,comments};
-        db.addSurvey(columns);
-        String str = String.format("""
-          <!DOCTYPE html>
-          <html lang="ja">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>アンケート</title>
-          </head>
-          <body>
-            <h2>ご回答ありがとうございました。</h2>
-            <p>
-            名前：%s<br>
-            メールアドレス：%s<br>
-            年齢：%s<br>
-            興味のあるプログラム言語：%s<br>
-            学習に使われるパソコン：%s<br>
-            パソコンメーカー：%s<br>
-            コメント：<br>%s
-            </p>
-            <p><a href="/survey">トップ</a></p>
-          </body>
-          </html>
-          """,db.escape(name),db.escape(email),age,program,pc,maker,db.escape(comments).replace("\n","<br>"));
-          out.println(str);
-          return;
+        Pattern p = Pattern.compile("[!-~]+@[\\w\\-.]+\\.[a-zA-Z]+");
+        Matcher m = p.matcher(email);
+        if (!m.matches()) {
+          survey.put("error","正しいメールアドレスを入力してください。");
+        } else {
+          String[] columns = {name,email,age,program,pc,maker,comments};
+          DBAccess.addSurvey(columns);
+          String str = String.format("""
+            <!DOCTYPE html>
+            <html lang="ja">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>アンケート</title>
+            </head>
+            <body>
+              <h2>ご回答ありがとうございました。</h2>
+              <p>
+              名前：%s<br>
+              メールアドレス：%s<br>
+              年齢：%s<br>
+              興味のあるプログラム言語：%s<br>
+              学習に使われるパソコン：%s<br>
+              パソコンメーカー：%s<br>
+              コメント：<br>%s
+              </p>
+              <p><a href="/survey">トップ</a></p>
+            </body>
+            </html>
+            """,User.escape(name),User.escape(email),age,program,pc,maker,User.escape(comments).replace("\n","<br>"));
+            out.println(str);
+            return;
+        }
       }
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/survey.jsp");
+      dispatcher.forward(request, response);
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/survey.jsp");
-    dispatcher.forward(request, response);
   }
 }

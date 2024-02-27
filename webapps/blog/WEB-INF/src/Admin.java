@@ -22,16 +22,19 @@ public class Admin extends HttpServlet {
     request.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("in admin");
-    HttpSession session = request.getSession(false);
-    if (session == null || (session != null && session.getAttribute("user") == null)) {
-      response.sendRedirect("/blog/admin/login");
-    } else {
-      DBAccess db = new DBAccess(this.getServletContext());
-      ArrayList<Post> posts = db.selectPostAll();
-      request.setAttribute("blog",posts);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
-      dispatcher.forward(request, response);
+    try {
+      HttpSession session = request.getSession(false);
+      if (session == null || (session != null && session.getAttribute("user") == null)) {
+        response.sendRedirect("/blog/admin/login");
+      } else {
+        DBAccess db = new DBAccess();
+        ArrayList<Post> posts = db.selectPostAll();
+        request.setAttribute("blog",posts);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
+        dispatcher.forward(request, response);
+      }
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
   }
 }

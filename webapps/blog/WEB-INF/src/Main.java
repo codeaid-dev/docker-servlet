@@ -21,24 +21,30 @@ import model.Post;
 public class Main extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    DBAccess db = new DBAccess(this.getServletContext());
-    //db.create();
-    String postId = request.getParameter("post");
-    if (postId == null) {
-      ArrayList<Post> posts = db.selectPostAll();
-      request.setAttribute("blog", posts);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/blog.jsp");
-      dispatcher.forward(request, response);
-    } else {
-      Post post = db.selectPost(Integer.parseInt(postId));
-      if (post.getId() == 0) {
-        response.sendError(HttpServletResponse.SC_NOT_FOUND, "投稿ページが見つかりません");
-        //response.sendRedirect(request.getContextPath()+"/404.jsp");
-      } else {
-        request.setAttribute("post", post);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/post.jsp");
+    request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
+    try {
+      DBAccess db = new DBAccess();
+      String postId = request.getParameter("post");
+      if (postId == null) {
+        ArrayList<Post> posts = db.selectPostAll();
+        request.setAttribute("blog", posts);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/blog.jsp");
         dispatcher.forward(request, response);
+      } else {
+        Post post = db.selectPost(Integer.parseInt(postId));
+        if (post.getId() == 0) {
+          response.sendError(HttpServletResponse.SC_NOT_FOUND, "投稿ページが見つかりません");
+          //response.sendRedirect(request.getContextPath()+"/404.jsp");
+        } else {
+          request.setAttribute("post", post);
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/post.jsp");
+          dispatcher.forward(request, response);
+        }
       }
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
   }
 }

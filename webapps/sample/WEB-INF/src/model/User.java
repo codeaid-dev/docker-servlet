@@ -38,11 +38,10 @@ public class User {
   public boolean verifyPassword(String password) throws NoSuchAlgorithmException {
     String salt = this.password.substring(0,24);
     try {
-      String check = hashPassword(password, salt);
-      return check.equals(this.password);
+      String verify = hashPassword(password, salt);
+      return verify.equals(this.password);
     } catch (NoSuchAlgorithmException e) {
       throw e;
     }
   }
-
 }

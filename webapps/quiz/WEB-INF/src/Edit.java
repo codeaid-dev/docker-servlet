@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,58 +17,69 @@ import model.DBAccess;
 public class Edit extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    DBAccess db = new DBAccess(this.getServletContext());
-    ArrayList<Quiz> quiz_list = db.select(null);
-    request.setAttribute("quizlist", quiz_list);
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/edit.jsp");
-    dispatcher.forward(request, response);
+    request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
+    try {
+      ArrayList<Quiz> quiz_list = DBAccess.select(null);
+      request.setAttribute("quizlist", quiz_list);
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/edit.jsp");
+      dispatcher.forward(request, response);
+    } catch (Exception e) {
+      out.println(e.getMessage());
+    }
   }
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
-    DBAccess db = new DBAccess(this.getServletContext());
-    ArrayList<Quiz> quiz_list = db.select(null);
-    request.setAttribute("quizlist", quiz_list);
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
+    try {
+      ArrayList<Quiz> quiz_list = DBAccess.select(null);
+      request.setAttribute("quizlist", quiz_list);
 
-    String id = request.getParameter("id");
-    String question = request.getParameter("question");
-    String answer = request.getParameter("answer");
+      String id = request.getParameter("id");
+      String question = request.getParameter("question");
+      String answer = request.getParameter("answer");
 
-    Quiz quiz = new Quiz(id,question,answer);
-    request.setAttribute("quiz",quiz);
+      Quiz quiz = new Quiz(id,question,answer);
+      request.setAttribute("quiz",quiz);
 
-    boolean exist = false;
-    if (id.chars().allMatch(Character::isDigit)) { // 番号が数字のときに読込・修正・削除を実施
-      for (Quiz q : quiz_list) {
-        if (q.getID().equals(id)) {
-          exist = true;
-        }
-      }
-      if (exist) {
-        if (request.getParameter("edit") != null) { // 修正
-          db.update(quiz);
-          quiz.setInfo("番号"+quiz.getID()+"の問題を修正しました。");
-        }
-        if (request.getParameter("delete") != null) { // 削除
-          db.delete(quiz);
-          quiz.setInfo("番号"+quiz.getID()+"の問題を削除しました。");
-        }
-        if (request.getParameter("get") != null) { // 読込
-          ArrayList<Quiz> ql = db.select(quiz);
-          if (ql.size() != 0) {
-            Quiz q = ql.get(0);
-            request.setAttribute("quiz", q);
+      boolean exist = false;
+      if (id.chars().allMatch(Character::isDigit)) { // 番号が数字のときに読込・修正・削除を実施
+        for (Quiz q : quiz_list) {
+          if (q.getID().equals(id)) {
+            exist = true;
           }
         }
+        if (exist) {
+          if (request.getParameter("edit") != null) { // 修正
+            DBAccess.update(quiz);
+            quiz.setInfo("番号"+quiz.getID()+"の問題を修正しました。");
+          }
+          if (request.getParameter("delete") != null) { // 削除
+            DBAccess.delete(quiz);
+            quiz.setInfo("番号"+quiz.getID()+"の問題を削除しました。");
+          }
+          if (request.getParameter("get") != null) { // 読込
+            ArrayList<Quiz> ql = DBAccess.select(quiz);
+            if (ql.size() != 0) {
+              Quiz q = ql.get(0);
+              request.setAttribute("quiz", q);
+            }
+          }
+        } else {
+          quiz.setInfo("指定した番号はありません。");
+        }
       } else {
-        quiz.setInfo("指定した番号はありません。");
+        quiz.setInfo("番号は数字を入力してください。");
       }
-    } else {
-      quiz.setInfo("番号は数字を入力してください。");
+      
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/edit.jsp");
+      dispatcher.forward(request, response);
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
-    
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/edit.jsp");
-    dispatcher.forward(request, response);
   }
 }

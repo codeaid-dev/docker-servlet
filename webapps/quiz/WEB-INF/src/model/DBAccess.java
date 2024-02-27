@@ -14,14 +14,12 @@ import jakarta.servlet.ServletContext;
 import model.Quiz;
 
 public class DBAccess {
-  private final String USER = "root";
-  private final String PASS = "password";
-  private Connection conn = null;
-  private ServletContext app = null; // for Logging
-  public DBAccess(ServletContext app) {
-    this.app = app;
-  }
-  public void create() {
+  private static final String USER = "root";
+  private static final String PASS = "password";
+  public DBAccess() {}
+
+  public static void create() throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -37,19 +35,18 @@ public class DBAccess {
       Statement stmt =  conn.createStatement();
       stmt.executeUpdate(sql);
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void insert(Quiz quiz) {
+  public static void insert(Quiz quiz) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -59,21 +56,20 @@ public class DBAccess {
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1,quiz.getQuestion());
       pstmt.setString(2,quiz.getAnswer());
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public ArrayList<Quiz> select(Quiz quiz) {
+  public static ArrayList<Quiz> select(Quiz quiz) throws Exception,SQLException {
+    Connection conn = null;
     ArrayList<Quiz> result = new ArrayList<Quiz>();
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
@@ -97,21 +93,20 @@ public class DBAccess {
         String question = rs.getString("question");
         result.add(new Quiz(id,question,answer));
       }
+      return result;
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
-    return result;
   }
 
-  public void update(Quiz quiz) {
+  public static void update(Quiz quiz) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -122,21 +117,20 @@ public class DBAccess {
       pstmt.setString(1,quiz.getQuestion());
       pstmt.setString(2,quiz.getAnswer());
       pstmt.setInt(3,Integer.parseInt(quiz.getID()));
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
 
-  public void delete(Quiz quiz) {
+  public static void delete(Quiz quiz) throws Exception,SQLException {
+    Connection conn = null;
     try {
       Class.forName("com.mysql.jdbc.Driver"); //MySQL
       //Class.forName("org.sqlite.JDBC"); //SQLite
@@ -145,16 +139,14 @@ public class DBAccess {
       String sql = "DELETE FROM questions WHERE id=?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setInt(1,Integer.parseInt(quiz.getID()));
-      int num = pstmt.executeUpdate();
+      pstmt.executeUpdate();
     } catch (Exception e) {
-      app.log(e.getMessage(), e);
-      //e.printStackTrace();
+      throw e;
     } finally {
       try {
         if (conn != null) { conn.close(); }
       } catch (SQLException e) {
-        app.log(e.getMessage(), e);
-        //e.printStackTrace();
+        throw e;
       }
     }
   }
