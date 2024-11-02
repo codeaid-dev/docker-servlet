@@ -71,6 +71,7 @@ public class Signup extends HttpServlet {
         user.setPassword(password);
         DBAccess.addUser(user);
         HttpSession session = request.getSession(true);
+        session.setMaxInactiveInterval(60); //セッション有効期限60秒
         session.setAttribute("user", user);
         response.sendRedirect("/survey/admin");
       }

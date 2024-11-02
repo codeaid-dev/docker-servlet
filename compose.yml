@@ -1,6 +1,6 @@
 services:
   tomcat:
-    image: tomcat:10.1.15-jdk17
+    image: tomcat:10.1.31-jdk21
     container_name: tomcat
     ports:
       - 8000:8080
