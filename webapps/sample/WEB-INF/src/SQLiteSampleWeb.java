@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,23 +24,29 @@ public class SQLiteSampleWeb extends HttpServlet {
     out.println("</head><body>");
 
     String dbname = "sample.db";
-    Connection conn = null;
-    Statement stmt = null;
+    String table = "CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name VARCHAR(20), score INTEGER)";
     try {
       Class.forName("org.sqlite.JDBC");
-      conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/" + dbname);
-      out.println("<p>接続成功</p>");
-
-      stmt = conn.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT, score INTEGER)");
+    } catch (ClassNotFoundException e) {
+      out.println(e.getMessage());
+    }
+    try (Connection conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/" + dbname);
+        Statement stmt = conn.createStatement()) {
+      stmt.executeUpdate(table);
       out.println("<p>テーブル作成</p>");
 
       stmt.executeUpdate("INSERT INTO users VALUES(1, 'Yamada', 85)");
       stmt.executeUpdate("INSERT INTO users VALUES(2, 'Tanaka', 79)");
       stmt.executeUpdate("INSERT INTO users VALUES(3, 'Suzuki', 63)");
       out.println("<p>データ挿入</p>");
+    } catch (SQLException e) {
+      out.println(e.getMessage());
+    }
 
-      ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE score >= 70");
+    String select = "SELECT * FROM users WHERE score >= 70";
+    try (Connection conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/" + dbname);
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(select)) {
       out.println("<p>70点以上選択</p>");
       out.println("<p>");
       while (rs.next()) {
@@ -51,21 +55,13 @@ public class SQLiteSampleWeb extends HttpServlet {
         int score = rs.getInt("score");
         out.println(id + "\t" + name + "\t" + score + "<br>");
       }
-      rs.close();
       out.println("</p>");
 
       stmt.executeUpdate("DROP TABLE users");
       out.println("<p>テーブル削除</p>");
       out.println("</body></html>");
-    } catch (Exception e) {
+    } catch (SQLException e) {
       out.println(e.getMessage());
-    } finally {
-      try {
-        if (stmt != null) { stmt.close(); }
-        if (conn != null) { conn.close(); }
-      } catch (SQLException e) {
-        out.println(e.getMessage());
-      }
     }
   }
 }
