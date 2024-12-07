@@ -5,12 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLitePlaceholderOld {
-  public static void main(String[] args) throws SQLException, ClassNotFoundException {
+  public static void main(String[] args) throws SQLException {
     String dbname = "sample.db";
     Connection conn = null;
     PreparedStatement pstmt = null;
     try {
-      Class.forName("org.sqlite.JDBC");
       conn = DriverManager.getConnection("jdbc:sqlite:../db/" + dbname);
       System.out.println("接続成功");
 
@@ -45,8 +44,6 @@ public class SQLitePlaceholderOld {
       pstmt = conn.prepareStatement("DROP TABLE users");
       pstmt.executeUpdate();
       System.out.println("テーブル削除");
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
