@@ -1,6 +1,6 @@
 {
   "name": "Dev-Container",
-  "dockerComposeFile": "../compose.yml",
+  "dockerComposeFile": "../compose.yaml",
   "service": "tomcat",
   "workspaceFolder": "/usr/local/tomcat/webapps",
   "extensions": [
