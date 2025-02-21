@@ -28,7 +28,7 @@ ArrayList<HashMap<String,String>> survey = (ArrayList<HashMap<String,String>>)se
 </head>
 <body>
   <h2>回答一覧</h2>
-  <table border="1">
+  <table>
     <tr>
       <th>回答日時</th>
       <th>名前</th>
