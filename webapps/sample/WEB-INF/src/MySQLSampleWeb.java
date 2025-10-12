@@ -1,9 +1,5 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-<<<<<<< HEAD
-=======
-import java.time.format.DateTimeFormatter;
->>>>>>> 135ba0e9c1b5eceec0e5f59570561e94c8d1a062
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
