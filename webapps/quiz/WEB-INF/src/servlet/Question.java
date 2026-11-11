@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -28,7 +30,7 @@ public class Question extends HttpServlet {
         Quiz quiz = quiz_list.get(index);
         request.setAttribute("quiz", quiz);
       }
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/quiz.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/quiz.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());
@@ -53,7 +55,7 @@ public class Question extends HttpServlet {
       } else {
         request.setAttribute("result", "不正解です(正解："+quiz.escape(right)+")");
       }
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/quiz.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/quiz.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());

@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -15,7 +17,7 @@ import model.DBAccess;
 public class Save extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/save.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/save.jsp");
     dispatcher.forward(request, response);
   }
 
@@ -31,7 +33,7 @@ public class Save extends HttpServlet {
       DBAccess.insert(quiz);
       quiz.setInfo("保存できました。");
       request.setAttribute("quiz", quiz);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/save.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/save.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());

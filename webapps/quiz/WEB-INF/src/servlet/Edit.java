@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -23,7 +25,7 @@ public class Edit extends HttpServlet {
     try {
       ArrayList<Quiz> quiz_list = DBAccess.select(null);
       request.setAttribute("quizlist", quiz_list);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/edit.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());
@@ -76,7 +78,7 @@ public class Edit extends HttpServlet {
         quiz.setInfo("番号は数字を入力してください。");
       }
       
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/edit.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());

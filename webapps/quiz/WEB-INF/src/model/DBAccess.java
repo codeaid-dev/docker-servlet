@@ -16,13 +16,21 @@ import model.Quiz;
 public class DBAccess {
   private static final String USER = "root";
   private static final String PASS = "password";
+
+  static {
+    try {
+      Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
+      // Class.forName("org.sqlite.JDBC"); //SQLite
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
   public DBAccess() {}
 
   public static void create() throws Exception,SQLException {
     Connection conn = null;
     try {
-      Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
-      //Class.forName("org.sqlite.JDBC"); //SQLite
       conn = DriverManager.getConnection("jdbc:mysql://mysql/quiz", USER, PASS); //MySQL
       //conn = DriverManager.getConnection("jdbc:sqlite:webapps/quiz/WEB-INF/db/quiz.db"); //SQLite
       // For MySQL using AUTO_INCREMENT, for SQLite using AUTOINCREMENT
@@ -48,8 +56,6 @@ public class DBAccess {
   public static void insert(Quiz quiz) throws Exception,SQLException {
     Connection conn = null;
     try {
-      Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //Class.forName("org.sqlite.JDBC"); //SQLite
       conn = DriverManager.getConnection("jdbc:mysql://mysql/quiz", USER, PASS); //MySQL
       //conn = DriverManager.getConnection("jdbc:sqlite:webapps/quiz/WEB-INF/db/quiz.db"); //SQLite
       String sql = "INSERT INTO questions (question, answer) VALUES (?, ?)";
@@ -72,8 +78,6 @@ public class DBAccess {
     Connection conn = null;
     ArrayList<Quiz> result = new ArrayList<Quiz>();
     try {
-      Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //Class.forName("org.sqlite.JDBC"); //SQLite
       conn = DriverManager.getConnection("jdbc:mysql://mysql/quiz", USER, PASS); //MySQL
       //conn = DriverManager.getConnection("jdbc:sqlite:webapps/quiz/WEB-INF/db/quiz.db"); //SQLite
       ResultSet rs = null;
@@ -108,8 +112,6 @@ public class DBAccess {
   public static void update(Quiz quiz) throws Exception,SQLException {
     Connection conn = null;
     try {
-      Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //Class.forName("org.sqlite.JDBC"); //SQLite
       conn = DriverManager.getConnection("jdbc:mysql://mysql/quiz", USER, PASS); //MySQL
       //conn = DriverManager.getConnection("jdbc:sqlite:webapps/quiz/WEB-INF/db/quiz.db"); //SQLite
       String sql = "UPDATE questions SET question=?, answer=? WHERE id=?";
@@ -132,8 +134,6 @@ public class DBAccess {
   public static void delete(Quiz quiz) throws Exception,SQLException {
     Connection conn = null;
     try {
-      Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //Class.forName("org.sqlite.JDBC"); //SQLite
       conn = DriverManager.getConnection("jdbc:mysql://mysql/quiz", USER, PASS); //MySQL
       //conn = DriverManager.getConnection("jdbc:sqlite:webapps/quiz/WEB-INF/db/quiz.db"); //SQLite
       String sql = "DELETE FROM questions WHERE id=?";
