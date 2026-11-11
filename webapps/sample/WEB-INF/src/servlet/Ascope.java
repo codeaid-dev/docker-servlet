@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.RequestDispatcher;
@@ -48,7 +50,7 @@ public class Ascope extends HttpServlet {
     ServletContext application = this.getServletContext();
     application.setAttribute("data", person);
 
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ascope.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/ascope.jsp");
     dispatcher.forward(request, response);
   }
 

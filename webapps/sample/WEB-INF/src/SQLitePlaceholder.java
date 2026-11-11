@@ -8,6 +8,11 @@ public class SQLitePlaceholder {
   public static void main(String[] args) throws SQLException {
     String dbname = "sample.db";
     String table = "CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT, score INTEGER)";
+    try {
+      Class.forName("org.sqlite.JDBC");
+    } catch (ClassNotFoundException e) {
+      System.out.println(e.getMessage());
+    }
     try (Connection conn = DriverManager.getConnection("jdbc:sqlite:../db/" + dbname);
         PreparedStatement pstmt = conn.prepareStatement(table)) {
       pstmt.executeUpdate();

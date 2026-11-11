@@ -1,3 +1,5 @@
+package model;
+
 import model.User;
 
 import java.sql.Connection;
@@ -10,15 +12,18 @@ public class HashSampleDB {
   private static final String USER = "root";
   private static final String PASS = "password";
 
+  static {
+    try {
+      Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
+      //Class.forName("org.sqlite.JDBC"); //SQLite
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
   public static void insert(String username, String password) throws SQLException, ClassNotFoundException{
     String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-      try {
-        Class.forName("com.mysql.jdbc.Driver"); //MySQL
-        //Class.forName("org.sqlite.JDBC"); //SQLite
-      } catch (ClassNotFoundException e) {
-        throw e;
-      }
-      try (Connection conn = DriverManager.getConnection("jdbc:mysql://mysql/sampledb", USER, PASS);
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://mysql/sampledb", USER, PASS);
         PreparedStatement pstmt = conn.prepareStatement(sql);) {
 //    try (Connection conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/sample.db");
 //    PreparedStatement pstmt = conn.prepareStatement(sql);) {      
@@ -32,12 +37,6 @@ public class HashSampleDB {
 
   public static void update(String username, String password) throws SQLException, ClassNotFoundException{
     String sql = "UPDATE users SET password=? WHERE username=?";
-    try {
-      Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //Class.forName("org.sqlite.JDBC"); //SQLite
-    } catch (ClassNotFoundException e) {
-      throw e;
-    }
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://mysql/sampledb", USER, PASS);
         PreparedStatement pstmt = conn.prepareStatement(sql);) {
 //    try (Connection conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/sample.db");
@@ -53,12 +52,6 @@ public class HashSampleDB {
   public static User select(String username) throws SQLException, ClassNotFoundException {
     User user = null;
     String sql = "SELECT * FROM users WHERE username=?";
-    try {
-      Class.forName("com.mysql.jdbc.Driver"); //MySQL
-      //Class.forName("org.sqlite.JDBC"); //SQLite
-    } catch (ClassNotFoundException e) {
-      throw e;
-    }
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://mysql/sampledb", USER, PASS);
         PreparedStatement pstmt = conn.prepareStatement(sql);) {
 //    try (Connection conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/sample.db");

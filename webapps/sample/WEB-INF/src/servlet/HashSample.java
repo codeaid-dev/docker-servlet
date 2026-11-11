@@ -1,3 +1,5 @@
+package servlet;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import model.User;
+import model.HashSampleDB;
 
 @WebServlet("/hashsample")
 public class HashSample extends HttpServlet  {
@@ -18,7 +21,7 @@ public class HashSample extends HttpServlet  {
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/hashsample.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/hashsample.jsp");
     dispatcher.forward(request, response);
   }
 
@@ -44,7 +47,7 @@ public class HashSample extends HttpServlet  {
           session.setAttribute("username", escape(username));
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/hashsample.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/hashsample.jsp");
         dispatcher.forward(request, response);
       
       // signup process

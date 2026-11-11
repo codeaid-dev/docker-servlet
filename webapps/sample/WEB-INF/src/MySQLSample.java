@@ -11,6 +11,11 @@ public class MySQLSample {
     String username = "root";
     String password = "password";
     String table = "CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name VARCHAR(20), score INTEGER)";
+    try {
+      Class.forName("com.mysql.cj.jdbc.Driver");
+    } catch (ClassNotFoundException e) {
+      System.out.println(e.getMessage());
+    }
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://"+ hostname + "/" + dbname, username, password);
         Statement stmt = conn.createStatement()) {
       stmt.executeUpdate(table);

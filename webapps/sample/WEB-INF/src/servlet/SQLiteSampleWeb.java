@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -13,27 +15,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-@WebServlet("/mysqlsample")
-public class MySQLSampleWeb extends HttpServlet {
+@WebServlet("/sqlitesample")
+public class SQLiteSampleWeb extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html lang=\"ja\"><head>");
-    out.println("<meta charset=\"UTF-8\"><title>MySQLSample</title>");
+    out.println("<meta charset=\"UTF-8\"><title>SQLiteSample</title>");
     out.println("</head><body>");
 
-    String hostname = "mysql";
-    String dbname = "sampledb";
-    String username = "root";
-    String password = "password";
+    String dbname = "sample.db";
     String table = "CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name VARCHAR(20), score INTEGER)";
     try {
-      Class.forName("com.mysql.jdbc.Driver");
+      Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
       out.println(e.getMessage());
     }
-    try (Connection conn = DriverManager.getConnection("jdbc:mysql://"+ hostname + "/" + dbname, username, password);
+    try (Connection conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/" + dbname);
         Statement stmt = conn.createStatement()) {
       stmt.executeUpdate(table);
       out.println("<p>テーブル作成</p>");
@@ -47,7 +46,7 @@ public class MySQLSampleWeb extends HttpServlet {
     }
 
     String select = "SELECT * FROM users WHERE score >= 70";
-    try (Connection conn = DriverManager.getConnection("jdbc:mysql://"+ hostname + "/" + dbname, username, password);
+    try (Connection conn = DriverManager.getConnection("jdbc:sqlite:webapps/sample/WEB-INF/db/" + dbname);
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(select)) {
       out.println("<p>70点以上選択</p>");

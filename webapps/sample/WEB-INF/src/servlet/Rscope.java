@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.RequestDispatcher;
@@ -46,7 +48,7 @@ public class Rscope extends HttpServlet {
 
     request.setAttribute("data", person);
 
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/rscope.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/rscope.jsp");
     dispatcher.forward(request, response);
   }
 

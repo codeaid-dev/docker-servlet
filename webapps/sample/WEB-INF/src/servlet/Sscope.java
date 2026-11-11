@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.RequestDispatcher;
@@ -32,7 +34,7 @@ public class Sscope extends HttpServlet {
         </html>
         """);
     } else {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sscope.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sscope.jsp");
       dispatcher.forward(request, response);
     }
   }
@@ -47,7 +49,7 @@ public class Sscope extends HttpServlet {
       if (password.equals("1234")) {
         session.setMaxInactiveInterval(30); //セッション有効期限30秒
         session.setAttribute("username", escape(username));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sscope.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sscope.jsp");
         dispatcher.forward(request, response);
       } else {
         PrintWriter out = response.getWriter();
