@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -43,7 +45,7 @@ public class Update extends HttpServlet {
         }
       }
       request.setAttribute("book", book);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/update.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/update.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());

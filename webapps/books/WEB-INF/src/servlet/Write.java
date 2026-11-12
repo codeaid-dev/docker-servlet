@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -15,7 +17,7 @@ import model.DBAccess;
 public class Write extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/write.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/write.jsp");
     dispatcher.forward(request, response);
   }
 
@@ -48,7 +50,7 @@ public class Write extends HttpServlet {
           DBAccess.update(book);
         }
         request.setAttribute("book", book);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/update.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/update.jsp");
         dispatcher.forward(request, response);
       } else {
         if (book.getInfo().size() == 0) {
@@ -60,7 +62,7 @@ public class Write extends HttpServlet {
           }
         }
         request.setAttribute("book", book);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/write.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/write.jsp");
         dispatcher.forward(request, response);
       }
     } catch (Exception e) {

@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -18,7 +20,7 @@ import model.DBAccess;
 public class Read extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/read.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/read.jsp");
     dispatcher.forward(request, response);
   }
 
@@ -41,7 +43,7 @@ public class Read extends HttpServlet {
       }
       request.setAttribute("book", result);
       request.setAttribute("books", results);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/read.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/read.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());
