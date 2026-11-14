@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -9,14 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.util.ArrayList;
-
 import model.User;
-import model.Post;
 import model.DBAccess;
 
-@WebServlet("/admin")
-public class Admin extends HttpServlet {
+@WebServlet("/admin/delete")
+public class Delete extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
@@ -25,12 +24,15 @@ public class Admin extends HttpServlet {
     try {
       HttpSession session = request.getSession(false);
       if (session == null || (session != null && session.getAttribute("user") == null)) {
-        response.sendRedirect("/blog/admin/login");
+        response.sendRedirect("/survey/admin/login");
       } else {
-        DBAccess db = new DBAccess();
-        ArrayList<Post> posts = db.selectPostAll();
-        request.setAttribute("blog",posts);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
+        // ユーザー登録解除
+        User user = (User)session.getAttribute("user");
+        String username = User.escape(user.getUsername());
+        session.invalidate();
+        request.setAttribute("username",username);
+        DBAccess.deleteUser();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/delete.jsp");
         dispatcher.forward(request, response);
       }
     } catch (Exception e) {

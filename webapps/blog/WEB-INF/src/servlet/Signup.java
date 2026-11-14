@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -22,26 +24,26 @@ public class Signup extends HttpServlet {
     request.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out = response.getWriter();
-
     try {
-      if (DBAccess.existUser()) {
+      DBAccess db = new DBAccess();
+      if (db.existUser()) {
         out.println("""
           <!DOCTYPE html>
           <html lang="ja">
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>アンケート</title>
+            <title>ブログアプリ</title>
           </head>
           <body>
             <p>管理者はすでに登録済みです。</p>
-            <p><a href="/survey/admin/login">戻る</a>
+            <p><a href="/blog/admin/login">戻る</a>
           </body>
           </html>
         """);
       } else {
         // ユーザー登録画面表示
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
         dispatcher.forward(request, response);
       }
     } catch (Exception e) {
@@ -62,18 +64,18 @@ public class Signup extends HttpServlet {
       Matcher m = p.matcher(password);
       if (!m.matches()) {
         request.setAttribute("error","パスワードは8~32文字で大小文字英字数字記号をそれぞれ1文字以上含める必要があります。");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
         dispatcher.forward(request, response);
       } else {
         User user = new User(username);
         String salt = user.generateSalt();
         password = user.hashPassword(password, salt);
         user.setPassword(password);
-        DBAccess.addUser(user);
+        DBAccess db = new DBAccess();
+        db.addUser(user);
         HttpSession session = request.getSession(true);
-        session.setMaxInactiveInterval(60); //セッション有効期限60秒
         session.setAttribute("user", user);
-        response.sendRedirect("/survey/admin");
+        response.sendRedirect("/blog/admin");
       }
     } catch (Exception e) {
       out.println(e.getMessage());

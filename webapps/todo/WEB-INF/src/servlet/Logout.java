@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -9,20 +11,18 @@ import jakarta.servlet.http.HttpSession;
 
 import model.User;
 
-@WebServlet("/admin/logout")
+@WebServlet("/logout")
 public class Logout extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     HttpSession session = request.getSession(false);
     if (session != null) {
       User user = (User)session.getAttribute("user");
-      if (user != null) {
-        String username = user.getUsername();
-        session.invalidate();
-        request.setAttribute("username",username);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/logout.jsp");
-        dispatcher.forward(request, response);
-      }
+      String username = user.getUsername();
+      session.invalidate();
+      request.setAttribute("username",username);
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logout.jsp");
+      dispatcher.forward(request, response);
     }
   }
 }

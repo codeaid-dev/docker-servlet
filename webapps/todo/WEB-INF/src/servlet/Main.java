@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -24,7 +26,7 @@ public class Main extends HttpServlet {
       response.sendRedirect("/todo/login");
     } else {
       // ToDo追加とリスト表示
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
       dispatcher.forward(request, response);
     }
   }

@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -34,7 +36,7 @@ public class Admin extends HttpServlet {
           row.put("comments",User.escape(row.get("comments")));
         }
         session.setAttribute("survey",survey);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
         dispatcher.forward(request, response);
       }
     } catch (Exception e) {

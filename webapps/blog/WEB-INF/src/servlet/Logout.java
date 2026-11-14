@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -17,10 +19,10 @@ public class Logout extends HttpServlet {
     if (session != null) {
       User user = (User)session.getAttribute("user");
       if (user != null) {
-        String username = User.escape(user.getUsername());
+        String username = user.getUsername();
         session.invalidate();
         request.setAttribute("username",username);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/logout.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logout.jsp");
         dispatcher.forward(request, response);
       }
     }

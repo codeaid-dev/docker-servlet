@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -30,16 +32,16 @@ public class Main extends HttpServlet {
       if (postId == null) {
         ArrayList<Post> posts = db.selectPostAll();
         request.setAttribute("blog", posts);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/blog.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/blog.jsp");
         dispatcher.forward(request, response);
       } else {
         Post post = db.selectPost(Integer.parseInt(postId));
         if (post.getId() == 0) {
           response.sendError(HttpServletResponse.SC_NOT_FOUND, "投稿ページが見つかりません");
-          //response.sendRedirect(request.getContextPath()+"/404.jsp");
+          //response.sendRedirect(request.getContextPath()+"/jsp/404.jsp");
         } else {
           request.setAttribute("post", post);
-          RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/post.jsp");
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/post.jsp");
           dispatcher.forward(request, response);
         }
       }

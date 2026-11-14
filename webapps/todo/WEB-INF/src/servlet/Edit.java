@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -45,7 +47,7 @@ public class Edit extends HttpServlet {
       } else {
         // ToDo編集表示
         user.setEditId(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/edit.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp");
         dispatcher.forward(request, response);
       }
     }

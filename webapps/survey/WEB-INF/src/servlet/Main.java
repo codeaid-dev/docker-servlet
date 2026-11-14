@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -28,7 +30,7 @@ public class Main extends HttpServlet {
     survey.put("maker","");
     survey.put("comments","");
     request.setAttribute("survey", survey);
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/survey.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/survey.jsp");
     dispatcher.forward(request, response);
   }
 
@@ -93,7 +95,7 @@ public class Main extends HttpServlet {
             return;
         }
       }
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/survey.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/survey.jsp");
       dispatcher.forward(request, response);
     } catch (Exception e) {
       out.println(e.getMessage());

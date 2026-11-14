@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -19,7 +21,7 @@ public class Login extends HttpServlet {
         throws ServletException, IOException {
     HttpSession session = request.getSession(false);
     if (session == null || (session != null && session.getAttribute("user") == null)) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
       dispatcher.forward(request, response);
     } else {
       response.sendRedirect("/todo/");
@@ -42,7 +44,7 @@ public class Login extends HttpServlet {
         response.sendRedirect("/todo/");
       } else {
         request.setAttribute("error","ログイン失敗");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
         dispatcher.forward(request, response);
       }
     } catch (Exception e) {

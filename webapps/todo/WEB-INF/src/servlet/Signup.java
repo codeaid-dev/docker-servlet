@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -24,7 +26,7 @@ public class Signup extends HttpServlet {
       response.sendRedirect("/todo/login");
     } else {
       // ユーザー登録画面表示
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
       dispatcher.forward(request, response);
     }
   }
@@ -39,14 +41,14 @@ public class Signup extends HttpServlet {
     try {
       if (DBAccess.existUser(username)) {
         request.setAttribute("error","登録済ユーザーです。");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
         dispatcher.forward(request, response);
       } else {
         Pattern p = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!-\\/:-@\\[-`{-~])[!-~]{8,32}$");
         Matcher m = p.matcher(password);
         if (!m.matches()) {
           request.setAttribute("error","パスワードは8~32文字で大小文字英字数字記号をそれぞれ1文字以上含める必要があります。");
-          RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/signup.jsp");
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
           dispatcher.forward(request, response);
         } else {
           User user = new User(username);
