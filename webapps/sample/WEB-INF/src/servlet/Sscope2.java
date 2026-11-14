@@ -1,3 +1,5 @@
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.RequestDispatcher;
@@ -48,7 +50,7 @@ public class Sscope2 extends HttpServlet {
     HttpSession session = request.getSession();
     session.setAttribute("data", person);
 
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sscope2.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sscope2.jsp");
     dispatcher.forward(request, response);
   }
 
