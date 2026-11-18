@@ -12,7 +12,7 @@ import model.HealthCheckLogic;
 public class HealthCheck extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/healthCheck.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/healthCheck.jsp");
     dispatcher.forward(request, response);
   }
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,7 +29,7 @@ public class HealthCheck extends HttpServlet {
 
     request.setAttribute("health", health);
 
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/healthCheckResult.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/healthCheckResult.jsp");
     dispatcher.forward(request, response);
   }
 }

@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ForwardSampleServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/forwardSample.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/forwardSample.jsp");
     dispatcher.forward(request, response);
   }
 }

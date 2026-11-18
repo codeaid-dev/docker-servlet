@@ -29,7 +29,7 @@ public class Main extends HttpServlet {
     if (loginUser == null) {
       response.sendRedirect("/sukkiri/");
     } else {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
       dispatcher.forward(request, response);
     }
   }
@@ -51,7 +51,7 @@ public class Main extends HttpServlet {
       request.setAttribute("errorMsg", "つぶやきが入力されていません");
     }
 
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/main.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
     dispatcher.forward(request, response);
   }
 }

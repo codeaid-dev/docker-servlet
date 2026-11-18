@@ -27,7 +27,7 @@ public class MinatoIndex extends HttpServlet {
       siteEVLogic.dislike(siteEV);
     }
     application.setAttribute("siteEV", siteEV);
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/minatoIndex.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/minatoIndex.jsp");
     dispatcher.forward(request, response);
   }
 }

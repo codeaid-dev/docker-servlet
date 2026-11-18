@@ -24,7 +24,7 @@ public class Login extends HttpServlet {
       HttpSession session = request.getSession();
       session.setAttribute("loginUser", user);
     }
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/loginResult.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginResult.jsp");
     dispatcher.forward(request, response);
   }
 }

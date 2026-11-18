@@ -16,14 +16,14 @@ public class RegisterUser extends HttpServlet {
     String forwardPath = null;
     String action = request.getParameter("action");
     if (action == null) {
-      forwardPath = "/WEB-INF/registerForm.jsp";
+      forwardPath = "/WEB-INF/jsp/registerForm.jsp";
     } else if (action.equals("done")) {
       HttpSession session = request.getSession();
       User registerUser = (User)session.getAttribute("registerUser");
       RegisterUserLogic logic = new RegisterUserLogic();
       logic.execute(registerUser);
       session.removeAttribute("registerUser");
-      forwardPath = "/WEB-INF/registerDone.jsp";
+      forwardPath = "/WEB-INF/jsp/registerDone.jsp";
     }
     RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
     dispatcher.forward(request, response);
@@ -40,7 +40,7 @@ public class RegisterUser extends HttpServlet {
     HttpSession session = request.getSession();
     session.setAttribute("registerUser", registerUser);
 
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/registerConfirm.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerConfirm.jsp");
     dispatcher.forward(request, response);
   }
 }
