@@ -23,6 +23,15 @@
         </a>
       </section>
       <section class="menu-item">
+        <h2>問題登録</h2>
+        <p>
+            新しい問題の登録を行います。
+        </p>
+        <a href="${pageContext.request.contextPath}/questions/register">
+            問題登録
+        </a>
+      </section>
+      <section class="menu-item">
         <h2>4択クイズ</h2>
         <p>
             登録されている問題に挑戦して、

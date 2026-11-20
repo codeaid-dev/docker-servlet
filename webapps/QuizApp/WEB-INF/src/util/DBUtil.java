@@ -150,8 +150,12 @@ public class DBUtil {
         """;
     String[] categories = {
         "Java",
+        "Servlet/JSP",
+        "JavaScript",
+        "Python",
+        "PHP",
         "SQL",
-        "Servlet/JSP"
+        "その他"
     };
     try (PreparedStatement ps =
             con.prepareStatement(sql)) {

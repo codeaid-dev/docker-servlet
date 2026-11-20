@@ -79,13 +79,13 @@ public class Quiz extends HttpServlet {
     int count;
     try {
       count = Integer.parseInt(countText);
-      if (count < 1 || count > 100) {
+      if (count < 1 || count > 50) {
         throw new NumberFormatException();
       }
     } catch (NumberFormatException e) {
       request.setAttribute(
           "errorMessage",
-          "出題数は1～100の整数で指定してください。"
+          "出題数は1～50の整数で指定してください。"
       );
       request.getRequestDispatcher(
           "/WEB-INF/jsp/quiz-start.jsp")
@@ -99,6 +99,16 @@ public class Quiz extends HttpServlet {
         request.setAttribute(
             "errorMessage",
             "出題できる問題が登録されていません。"
+        );
+        request.getRequestDispatcher(
+            "/WEB-INF/jsp/quiz-start.jsp")
+            .forward(request, response);
+        return;
+      }
+      if (count > questions.size()) {
+        request.setAttribute(
+            "errorMessage",
+            "出題数は"+questions.size()+"問以下にしてください。"
         );
         request.getRequestDispatcher(
             "/WEB-INF/jsp/quiz-start.jsp")

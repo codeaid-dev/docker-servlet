@@ -25,7 +25,7 @@
               name="count"
               value="5"
               min="1"
-              max="100"
+              max="50"
               required>
     </p>
     <button type="submit">クイズ開始</button>

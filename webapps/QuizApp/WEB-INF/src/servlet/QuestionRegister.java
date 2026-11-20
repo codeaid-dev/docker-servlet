@@ -116,11 +116,11 @@ public class QuestionRegister extends HttpServlet {
           "問題文と4つの選択肢は必須です"
       );
     }
-    if (question.length() > 1000 ||
-        choice1.length() > 300 ||
-        choice2.length() > 300 ||
-        choice3.length() > 300 ||
-        choice4.length() > 300 ||
+    if (question.length() > 500 ||
+        choice1.length() > 200 ||
+        choice2.length() > 200 ||
+        choice3.length() > 200 ||
+        choice4.length() > 200 ||
         explanation.length() > 2000) {
       throw new IllegalArgumentException(
           "入力文字数が上限を超えています"
