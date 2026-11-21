@@ -19,10 +19,8 @@
       <h2 style="color:red">不正解です。</h2>
     </c:otherwise>
   </c:choose>
-  <p>
-    問題：
-    <c:out value="${question.question}" />
-  </p>
+  <p style="white-space: pre-line;">問題：
+  <c:out value="${question.question}" /></p>
   <p>
     あなたの回答：
     <c:choose>
@@ -58,9 +56,7 @@
     </c:choose>
   </p>
   <h3>解説</h3>
-  <p>
-    <c:out value="${explanation}" />
-  </p>
+  <p style="white-space: pre-line;"><c:out value="${explanation}" /></p>
   <form action="${pageContext.request.contextPath}/quiz"
         method="post">
     <input type="hidden" name="action" value="next">

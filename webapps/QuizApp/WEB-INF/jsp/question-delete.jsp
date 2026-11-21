@@ -28,9 +28,7 @@
     </tr>
     <tr>
       <th>問題文</th>
-      <td>
-        <c:out value="${question.question}"/>
-      </td>
+      <td style="white-space: pre-line;"><c:out value="${question.question}"/></td>
     </tr>
     <tr>
         <th>正解番号</th>

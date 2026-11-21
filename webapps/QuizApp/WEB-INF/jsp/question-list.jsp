@@ -53,9 +53,7 @@
         <td>
           <c:out value="${q.categoryName}"/>
         </td>
-        <td>
-          <c:out value="${q.question}"/>
-        </td>
+        <td style="white-space: pre-line;"><c:out value="${q.question}"/></td>
         <td>
           <c:out value="${q.correctAnswer}"/>
         </td>

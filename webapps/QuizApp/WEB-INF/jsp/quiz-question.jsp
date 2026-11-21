@@ -15,9 +15,7 @@
     第 <c:out value="${questionNumber}" /> 問 /
     全 <c:out value="${totalQuestions}" /> 問
   </p>
-  <h2>
-    <c:out value="${question.question}" />
-  </h2>
+  <h2 style="white-space: pre-line;"><c:out value="${question.question}" /></h2>
   <form action="${pageContext.request.contextPath}/quiz"
         method="post">
     <input type="hidden" name="action" value="answer">

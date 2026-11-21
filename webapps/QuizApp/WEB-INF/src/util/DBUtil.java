@@ -13,6 +13,8 @@ import jakarta.servlet.ServletContext;
 
 public class DBUtil {
   private static volatile String dbUrl;
+  private static final String USER = "root";
+  private static final String PASS = "password";
   private DBUtil() {
   }
   /**
@@ -40,8 +42,13 @@ public class DBUtil {
     }
     Files.createDirectories(dbDir);
     Path dbFile = dbDir.resolve("quiz.db");
-    Class.forName("org.sqlite.JDBC");
-    dbUrl = "jdbc:sqlite:" + dbFile.toAbsolutePath();
+    // Class.forName("org.sqlite.JDBC"); // SQLite
+    Class.forName("com.mysql.cj.jdbc.Driver"); // MySQL
+    // dbUrl = "jdbc:sqlite:" + dbFile.toAbsolutePath(); // SQLite
+    dbUrl = "jdbc:mysql://mysql:3306/QuizApp"
+        + "?useUnicode=true"
+        + "&characterEncoding=UTF-8"
+        + "&serverTimezone=Asia/Tokyo"; // MySQL
     try (Connection con = getConnection()) {
       con.setAutoCommit(false);
       try {
@@ -57,10 +64,11 @@ public class DBUtil {
       dbUrl = null;
       throw e;
     }
-    context.log(
-      "QuizApp SQLite DB initialized: "
-      + dbFile.toAbsolutePath()
-    );
+    // SQLite
+    // context.log(
+    //   "QuizApp SQLite DB initialized: "
+    //   + dbFile.toAbsolutePath()
+    // );
   }
   /**
    * データベース接続
@@ -73,11 +81,12 @@ public class DBUtil {
           "データベースが初期化されていません"
       );
     }
-    Connection con = DriverManager.getConnection(url);
+    // Connection con = DriverManager.getConnection(url); // SQLite
+    Connection con = DriverManager.getConnection(url,USER,PASS); // MySQL
     try (Statement st = con.createStatement()) {
       // SQLiteでは接続ごとに有効化する必要がある
-      st.execute("PRAGMA foreign_keys = ON");
-      st.execute("PRAGMA busy_timeout = 5000");
+      // st.execute("PRAGMA foreign_keys = ON"); // SQLite
+      // st.execute("PRAGMA busy_timeout = 5000"); // SQLite
       return con;
     } catch (SQLException e) {
       con.close();
@@ -90,25 +99,69 @@ public class DBUtil {
   private static void createTables(Connection con)
           throws SQLException {
     try (Statement st = con.createStatement()) {
+      // For MySQL using AUTO_INCREMENT, for SQLite using AUTOINCREMENT
+      // st.execute("""
+      //     CREATE TABLE IF NOT EXISTS categories (
+      //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+      //         name TEXT NOT NULL UNIQUE
+      //     )
+      //     """);
+      // st.execute("""
+      //     CREATE TABLE IF NOT EXISTS questions (
+      //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+      //         category_id INTEGER NOT NULL,
+      //         question TEXT NOT NULL,
+      //         choice1 TEXT NOT NULL,
+      //         choice2 TEXT NOT NULL,
+      //         choice3 TEXT NOT NULL,
+      //         choice4 TEXT NOT NULL,
+      //         correct_answer INTEGER NOT NULL
+      //             CHECK(correct_answer BETWEEN 1 AND 4),
+      //         explanation TEXT NOT NULL DEFAULT '',
+      //         created_at TEXT NOT NULL
+      //             DEFAULT CURRENT_TIMESTAMP,
+
+      //         FOREIGN KEY(category_id)
+      //             REFERENCES categories(id)
+      //             ON DELETE RESTRICT
+      //     )
+      //     """);
+      // st.execute("""
+      //     CREATE TABLE IF NOT EXISTS wrong_answers (
+      //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+      //         question_id INTEGER NOT NULL UNIQUE,
+      //         wrong_count INTEGER NOT NULL DEFAULT 1
+      //             CHECK(wrong_count >= 1),
+      //         last_wrong_at TEXT NOT NULL
+      //             DEFAULT CURRENT_TIMESTAMP,
+      //         is_reviewed INTEGER NOT NULL DEFAULT 0
+      //             CHECK(is_reviewed IN (0, 1)),
+
+      //         FOREIGN KEY(question_id)
+      //             REFERENCES questions(id)
+      //             ON DELETE CASCADE
+      //     )
+      //     """);
+      // MySQL
       st.execute("""
           CREATE TABLE IF NOT EXISTS categories (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              name TEXT NOT NULL UNIQUE
+              id INT PRIMARY KEY AUTO_INCREMENT,
+              name VARCHAR(100) NOT NULL UNIQUE
           )
           """);
       st.execute("""
           CREATE TABLE IF NOT EXISTS questions (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              category_id INTEGER NOT NULL,
-              question TEXT NOT NULL,
-              choice1 TEXT NOT NULL,
-              choice2 TEXT NOT NULL,
-              choice3 TEXT NOT NULL,
-              choice4 TEXT NOT NULL,
-              correct_answer INTEGER NOT NULL
+              id INT PRIMARY KEY AUTO_INCREMENT,
+              category_id INT NOT NULL,
+              question VARCHAR(500) NOT NULL,
+              choice1 VARCHAR(200) NOT NULL,
+              choice2 VARCHAR(200) NOT NULL,
+              choice3 VARCHAR(200) NOT NULL,
+              choice4 VARCHAR(200) NOT NULL,
+              correct_answer INT NOT NULL
                   CHECK(correct_answer BETWEEN 1 AND 4),
-              explanation TEXT NOT NULL DEFAULT '',
-              created_at TEXT NOT NULL
+              explanation TEXT NOT NULL,
+              created_at TIMESTAMP NOT NULL
                   DEFAULT CURRENT_TIMESTAMP,
 
               FOREIGN KEY(category_id)
@@ -118,13 +171,13 @@ public class DBUtil {
           """);
       st.execute("""
           CREATE TABLE IF NOT EXISTS wrong_answers (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              question_id INTEGER NOT NULL UNIQUE,
-              wrong_count INTEGER NOT NULL DEFAULT 1
+              id INT PRIMARY KEY AUTO_INCREMENT,
+              question_id INT NOT NULL UNIQUE,
+              wrong_count INT NOT NULL DEFAULT 1
                   CHECK(wrong_count >= 1),
-              last_wrong_at TEXT NOT NULL
+              last_wrong_at TIMESTAMP NOT NULL
                   DEFAULT CURRENT_TIMESTAMP,
-              is_reviewed INTEGER NOT NULL DEFAULT 0
+              is_reviewed INT NOT NULL DEFAULT 0
                   CHECK(is_reviewed IN (0, 1)),
 
               FOREIGN KEY(question_id)
